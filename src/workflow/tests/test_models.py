@@ -79,3 +79,66 @@ class TestStepResult:
     def test_failure_when_error_set(self):
         r = StepResult(step_number=1, task="t", server="a", response="", error="oops")
         assert r.success is False
+
+
+class TestPlanDependencyLayers:
+    def test_no_deps_single_layer(self):
+        """All independent steps should be grouped into a single layer."""
+        plan = Plan(steps=[_step(1), _step(2), _step(3)], raw="")
+        layers = plan.dependency_layers()
+        assert len(layers) == 1
+        assert [s.step_number for s in layers[0]] == [1, 2, 3]
+
+    def test_linear_chain_one_per_layer(self):
+        """A fully serial plan (1→2→3) should produce one step per layer."""
+        plan = Plan(steps=[_step(1), _step(2, [1]), _step(3, [2])], raw="")
+        layers = plan.dependency_layers()
+        assert len(layers) == 3
+        assert [s.step_number for s in layers[0]] == [1]
+        assert [s.step_number for s in layers[1]] == [2]
+        assert [s.step_number for s in layers[2]] == [3]
+
+    def test_diamond_pattern(self):
+        """Diamond: 1→{2,3}→4 should produce 3 layers with 2,3 parallel."""
+        plan = Plan(
+            steps=[_step(1), _step(2, [1]), _step(3, [1]), _step(4, [2, 3])],
+            raw="",
+        )
+        layers = plan.dependency_layers()
+        assert len(layers) == 3
+        assert [s.step_number for s in layers[0]] == [1]
+        assert [s.step_number for s in layers[1]] == [2, 3]
+        assert [s.step_number for s in layers[2]] == [4]
+
+    def test_empty_plan(self):
+        plan = Plan(steps=[], raw="")
+        assert plan.dependency_layers() == []
+
+    def test_single_step(self):
+        plan = Plan(steps=[_step(1)], raw="")
+        layers = plan.dependency_layers()
+        assert len(layers) == 1
+        assert [s.step_number for s in layers[0]] == [1]
+
+    def test_mixed_deps_and_independent(self):
+        """Step 1 independent, step 3 independent, step 2 depends on 1.
+
+        Expected: layer 0 = [1, 3], layer 1 = [2]
+        """
+        plan = Plan(steps=[_step(1), _step(2, [1]), _step(3)], raw="")
+        layers = plan.dependency_layers()
+        assert len(layers) == 2
+        assert [s.step_number for s in layers[0]] == [1, 3]
+        assert [s.step_number for s in layers[1]] == [2]
+
+    def test_layers_cover_all_steps(self):
+        """Every step should appear in exactly one layer."""
+        plan = Plan(
+            steps=[_step(1), _step(2, [1]), _step(3, [1]), _step(4, [2, 3])],
+            raw="",
+        )
+        layers = plan.dependency_layers()
+        all_steps = [s.step_number for layer in layers for s in layer]
+        assert sorted(all_steps) == [1, 2, 3, 4]
+        assert len(all_steps) == len(set(all_steps))  # no duplicates
+

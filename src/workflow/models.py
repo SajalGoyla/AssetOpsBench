@@ -49,6 +49,46 @@ class Plan:
             visit(step.step_number)
         return ordered
 
+    def dependency_layers(self) -> list[list["PlanStep"]]:
+        """Group steps into dependency layers for parallel execution.
+
+        Layer 0: steps with no dependencies (can all run in parallel)
+        Layer 1: steps whose dependencies are all in layer 0
+        Layer N: steps whose dependencies are all in layers 0..N-1
+
+        Returns:
+            List of layers, where each layer is a list of PlanSteps
+            that can execute concurrently.
+        """
+        if not self.steps:
+            return []
+
+        step_map = {s.step_number: s for s in self.steps}
+        in_degree = {s.step_number: 0 for s in self.steps}
+        dependents: dict[int, list[int]] = {s.step_number: [] for s in self.steps}
+
+        for s in self.steps:
+            for dep in s.dependencies:
+                if dep in step_map:
+                    in_degree[s.step_number] += 1
+                    dependents[dep].append(s.step_number)
+
+        layers: list[list[PlanStep]] = []
+        ready = [n for n, deg in in_degree.items() if deg == 0]
+
+        while ready:
+            layer = [step_map[n] for n in sorted(ready)]
+            layers.append(layer)
+            next_ready: list[int] = []
+            for n in ready:
+                for dep_n in dependents[n]:
+                    in_degree[dep_n] -= 1
+                    if in_degree[dep_n] == 0:
+                        next_ready.append(dep_n)
+            ready = next_ready
+
+        return layers
+
 
 @dataclass
 class StepResult:

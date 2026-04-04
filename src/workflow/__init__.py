@@ -2,6 +2,7 @@
 
 from .runner import PlanExecuteRunner
 from .models import OrchestratorResult, Plan, PlanStep, StepResult
+from .executor_parallel import ParallelExecutor
 
 __all__ = [
     "PlanExecuteRunner",
@@ -9,4 +10,5 @@ __all__ = [
     "Plan",
     "PlanStep",
     "StepResult",
+    "ParallelExecutor",
 ]

@@ -403,3 +403,182 @@ def test_parse_tool_call_unrecoverable_returns_direct_answer():
     result = _parse_tool_call(raw)
     assert result["tool"] is None
     assert result["answer"] == raw
+
+
+# ── ParallelExecutor tests ────────────────────────────────────────────────────
+
+
+@pytest.mark.anyio
+async def test_parallel_independent_steps_run_concurrently(mock_llm):
+    """Two independent steps should both start before either finishes.
+
+    Uses an asyncio.Event to verify that both steps are in-flight
+    simultaneously — the second step's response only resolves after the
+    first step signals that it has started.
+    """
+    import asyncio
+    from pathlib import Path
+    from workflow.executor_parallel import ParallelExecutor
+
+    both_started = asyncio.Event()
+    call_order: list[str] = []
+
+    async def _mock_call(server_path, tool_name, args):
+        call_order.append(f"start_{tool_name}")
+        if tool_name == "sites":
+            # Signal that first call is in-flight
+            both_started.set()
+            await asyncio.sleep(0.05)  # simulate work
+        else:
+            # Wait until the first call has started (proves concurrency)
+            await asyncio.wait_for(both_started.wait(), timeout=1.0)
+        call_order.append(f"end_{tool_name}")
+        return '{"result": "ok"}'
+
+    llm = mock_llm("")
+    executor = ParallelExecutor(llm, server_paths={"iot": Path("/fake"), "utilities": Path("/fake")})
+
+    plan = Plan(
+        steps=[
+            _make_step(1, server="iot", tool="sites"),
+            _make_step(2, server="utilities", tool="current_date_time"),
+        ],
+        raw="",
+    )
+
+    with (
+        patch("workflow.executor._list_tools", new=AsyncMock(return_value=_MOCK_TOOLS)),
+        patch("workflow.executor._call_tool", new=_mock_call),
+    ):
+        results = await executor.execute_plan(plan, "Q")
+
+    assert all(r.success for r in results)
+    # Both starts should happen before both ends (concurrent, not sequential)
+    assert call_order.index("start_sites") < call_order.index("end_current_date_time")
+    assert call_order.index("start_current_date_time") < call_order.index("end_sites")
+
+
+@pytest.mark.anyio
+async def test_parallel_dependent_step_waits(mock_llm):
+    """Step 2 (depends on step 1) must not start until step 1 completes."""
+    from pathlib import Path
+    from workflow.executor_parallel import ParallelExecutor
+
+    call_order: list[str] = []
+
+    async def _mock_call(server_path, tool_name, args):
+        call_order.append(f"start_{tool_name}")
+        call_order.append(f"end_{tool_name}")
+        return '{"result": "ok"}'
+
+    llm = mock_llm("")
+    executor = ParallelExecutor(llm, server_paths={"iot": Path("/fake")})
+
+    plan = Plan(
+        steps=[
+            _make_step(1, tool="sites"),
+            _make_step(2, tool="sensors", deps=[1]),
+        ],
+        raw="",
+    )
+
+    with (
+        patch("workflow.executor._list_tools", new=AsyncMock(return_value=_MOCK_TOOLS)),
+        patch("workflow.executor._call_tool", new=_mock_call),
+    ):
+        results = await executor.execute_plan(plan, "Q")
+
+    assert all(r.success for r in results)
+    # Step 1 must fully complete before step 2 starts
+    assert call_order.index("end_sites") < call_order.index("start_sensors")
+
+
+@pytest.mark.anyio
+async def test_parallel_failed_step_doesnt_block_siblings(mock_llm):
+    """A failed step in a parallel layer should not prevent siblings from running."""
+    from pathlib import Path
+    from workflow.executor_parallel import ParallelExecutor
+
+    async def _mock_call(server_path, tool_name, args):
+        if tool_name == "sites":
+            raise RuntimeError("server down")
+        return '{"result": "ok"}'
+
+    llm = mock_llm("")
+    executor = ParallelExecutor(
+        llm,
+        server_paths={"iot": Path("/fake"), "utilities": Path("/fake")},
+    )
+
+    plan = Plan(
+        steps=[
+            _make_step(1, server="iot", tool="sites"),
+            _make_step(2, server="utilities", tool="current_date_time"),
+        ],
+        raw="",
+    )
+
+    with (
+        patch("workflow.executor._list_tools", new=AsyncMock(return_value=_MOCK_TOOLS)),
+        patch("workflow.executor._call_tool", new=_mock_call),
+    ):
+        results = await executor.execute_plan(plan, "Q")
+
+    assert len(results) == 2
+    assert results[0].success is False
+    assert "server down" in results[0].error
+    assert results[1].success is True
+
+
+@pytest.mark.anyio
+async def test_parallel_serial_plan_matches_sequential(mock_llm):
+    """A fully serial plan through ParallelExecutor should produce identical
+    results to the base sequential Executor."""
+    from pathlib import Path
+    from workflow.executor_parallel import ParallelExecutor
+
+    responses = iter(["resp_1", "resp_2", "resp_3"])
+
+    async def _mock_call(server_path, tool_name, args):
+        return next(responses)
+
+    llm = mock_llm("")
+    executor = ParallelExecutor(llm, server_paths={"iot": Path("/fake")})
+
+    plan = Plan(
+        steps=[
+            _make_step(1, tool="sites"),
+            _make_step(2, tool="sensors", deps=[1]),
+            _make_step(3, tool="history", deps=[2]),
+        ],
+        raw="",
+    )
+
+    with (
+        patch("workflow.executor._list_tools", new=AsyncMock(return_value=_MOCK_TOOLS)),
+        patch("workflow.executor._call_tool", new=_mock_call),
+    ):
+        results = await executor.execute_plan(plan, "Q")
+
+    assert [r.step_number for r in results] == [1, 2, 3]
+    assert [r.response for r in results] == ["resp_1", "resp_2", "resp_3"]
+    assert all(r.success for r in results)
+
+
+@pytest.mark.anyio
+async def test_parallel_orchestrator_uses_injected_executor(sequential_llm):
+    """PlanExecuteRunner should use the injected ParallelExecutor."""
+    from pathlib import Path
+    from workflow.executor_parallel import ParallelExecutor
+
+    llm = sequential_llm([_TWO_STEP_PLAN, _FINAL_ANSWER])
+    executor = ParallelExecutor(llm, server_paths=None)
+
+    with _patch_mcp()[0], _patch_mcp()[1]:
+        result = await PlanExecuteRunner(llm, executor=executor).run("Q")
+
+    assert result.answer == _FINAL_ANSWER
+    # Two independent steps should both succeed
+    assert len(result.history) == 2
+    assert all(r.success for r in result.history)
+
