@@ -1,14 +1,4 @@
-"""MCP plan-execute orchestration package."""
+"""Workflow orchestration package (stub).
 
-from .runner import PlanExecuteRunner
-from .models import OrchestratorResult, Plan, PlanStep, StepResult
-from .executor_parallel import ParallelExecutor
-
-__all__ = [
-    "PlanExecuteRunner",
-    "OrchestratorResult",
-    "Plan",
-    "PlanStep",
-    "StepResult",
-    "ParallelExecutor",
-]
+The parallel executor now lives in agent.plan_execute.executor_parallel.
+"""

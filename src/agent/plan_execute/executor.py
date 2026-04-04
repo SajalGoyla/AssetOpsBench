@@ -206,6 +206,8 @@ async def _resolve_args_with_llm(
     llm: LLMBackend,
 ) -> dict:
     """Generate tool arguments from the task description and prior step results."""
+    import asyncio
+
     context_text = "\n".join(
         f"Step {n}: {r.response}" for n, r in sorted(context.items())
     )
@@ -217,7 +219,14 @@ async def _resolve_args_with_llm(
         .replace("{tool_schema}", tool_schema or "(unknown)")
         .replace("{context}", context_text or "(none)")
     )
-    raw = llm.generate(prompt)
+    # llm.generate() is synchronous (blocking HTTP call).  Running it directly
+    # inside an async coroutine blocks the event loop, which:
+    #   1. Prevents MCP subprocess I/O from being drained (→ pipe-buffer
+    #      deadlock on Windows where the default buffer is only 4 KB).
+    #   2. Serialises all "parallel" LLM calls, eliminating concurrency.
+    # Offloading to a thread via run_in_executor solves both problems.
+    loop = asyncio.get_running_loop()
+    raw = await loop.run_in_executor(None, llm.generate, prompt)
     resolved = _parse_json(raw)
     if resolved is None:
         _log.warning(

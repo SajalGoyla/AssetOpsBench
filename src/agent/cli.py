@@ -157,7 +157,7 @@ async def _run(args: argparse.Namespace) -> None:
 
     executor = None
     if args.parallel:
-        from workflow.executor_parallel import ParallelExecutor
+        from agent.plan_execute.executor_parallel import ParallelExecutor
         executor = ParallelExecutor(llm, server_paths)
 
     runner = PlanExecuteRunner(llm=llm, server_paths=server_paths, executor=executor)
