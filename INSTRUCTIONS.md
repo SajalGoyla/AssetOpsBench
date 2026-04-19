@@ -14,14 +14,16 @@ This directory contains the MCP servers and infrastructure for the AssetOpsBench
   - [tsfm](#tsfm)
   - [wo](#wo)
   - [vibration](#vibration)
-- [Plan-Execute Runner](#plan-execute-runner)
+- [Example queries](#example-queries)
+- [Plan-Execute Agent](#plan-execute-agent)
   - [How it works](#how-it-works)
   - [CLI](#cli)
-  - [End-to-end example](#end-to-end-example)
-  - [Python API](#python-api)
-  - [Bring your own LLM](#bring-your-own-llm)
-  - [Add more MCP servers](#add-more-mcp-servers)
-- [Connect to Claude Desktop](#connect-to-claude-desktop)
+- [Claude Agent](#claude-agent)
+  - [How it works](#how-it-works-1)
+  - [CLI](#cli-1)
+- [OpenAI Agent](#openai-agent)
+  - [How it works](#how-it-works-2)
+  - [CLI](#cli-2)
 - [Running Tests](#running-tests)
 - [Architecture](#architecture)
 
@@ -122,6 +124,10 @@ uv run vibration-mcp-server
 | `LITELLM_API_KEY`  | _(required)_ | LiteLLM proxy API key                                                |
 | `LITELLM_BASE_URL` | _(required)_ | LiteLLM proxy base URL, e.g. `https://your-litellm-host.example.com` |
 
+**OpenAI Agents SDK** — openai-agent runner (always routed through LiteLLM proxy via `litellm_proxy/` prefix)
+
+> Uses the same `LITELLM_API_KEY` and `LITELLM_BASE_URL` variables as the plan-execute runner above.
+
 ---
 
 ## MCP Servers
@@ -211,7 +217,21 @@ uv run vibration-mcp-server
 
 ---
 
-## Plan-Execute Runner
+## Example queries
+
+The CLI examples below use a `$query` shell variable so you can swap in any question without editing the commands. Pick one of these to get started:
+
+```bash
+# Simple single-server queries
+query="What sensors are on Chiller 6?"
+query="Is LSTM model supported in TSFM?"
+query="Get the work order of equipment CWC04013 for year 2017."
+
+# Multi-step / multi-server queries
+query="What is the current date and time? Also list assets at site MAIN. Also get sensor list and failure mode list for any of the chiller at site MAIN."
+```
+
+## Plan-Execute Agent
 
 `src/agent/` is a custom MCP client that implements a **plan-and-execute** workflow over the MCP servers. It replaces AgentHive's bespoke orchestration with the standard MCP protocol.
 
@@ -238,7 +258,7 @@ PlanExecuteRunner.run(question)
 After `uv sync`, the `plan-execute` command is available:
 
 ```bash
-uv run plan-execute "What assets are available at site MAIN?"
+uv run plan-execute "$query"
 ```
 
 > **Note:** `plan-execute` spawns MCP servers on-demand for each query — you do **not** need to start them manually first. Servers are launched as subprocesses, used, then exit automatically.
@@ -250,8 +270,8 @@ Flags:
 | `--model-id MODEL_ID` | litellm model string with provider prefix (default: `watsonx/meta-llama/llama-4-maverick-17b-128e-instruct-fp8`) |
 | `--server NAME=SPEC`  | Override MCP servers with `NAME=SPEC` pairs (repeatable); SPEC is an entry-point name or path                    |
 | `--show-plan`         | Print the generated plan before execution                                                                        |
-| `--show-history`      | Print each step result after execution                                                                           |
-| `--json`              | Output answer + plan + history as JSON                                                                           |
+| `--show-trajectory`   | Print each step result after execution                                                                           |
+| `--json`              | Output answer + plan + trajectory as JSON                                                                           |
 
 The provider is encoded in the `--model-id` prefix:
 
@@ -264,169 +284,125 @@ Examples:
 
 ```bash
 # WatsonX — default model
-uv run plan-execute "What assets are at site MAIN?"
+uv run plan-execute "$query"
 
 # WatsonX — different model, inspect the plan
-uv run plan-execute --model-id watsonx/ibm/granite-3-3-8b-instruct --show-plan "List sensors for asset CH-1"
+uv run plan-execute --model-id watsonx/ibm/granite-3-3-8b-instruct --show-plan "$query"
 
 # LiteLLM proxy
-uv run plan-execute --model-id litellm_proxy/GCP/claude-4-sonnet "What are the failure modes for a chiller?"
+uv run plan-execute --model-id litellm_proxy/GCP/claude-4-sonnet "$query"
 
 # Machine-readable output
-uv run plan-execute --show-history --json "How many observations exist for CH-1?" | jq .answer
+uv run plan-execute --show-trajectory --json "$query" | jq .answer
 ```
-
-### End-to-end examples
-
-All six servers (iot, utilities, fmsr, tsfm, wo, vibration) are registered by default.
-
-#### Work order queries (requires CouchDB + populated `workorder` db)
-
-Equipment IDs in the sample dataset: `CWC04014` (524 WOs), `CWC04013` (431 WOs), `CWC04009` (alert events).
-
-```bash
-# Work order count and most common failure code
-uv run plan-execute "How many work orders does equipment CWC04014 have, and what is the most common failure code?"
-
-# Preventive vs corrective split
-uv run plan-execute "For equipment CWC04013, how many preventive vs corrective work orders were completed?"
-
-# Alert-to-failure probability
-uv run plan-execute "What is the probability that alert rule RUL0018 on equipment CWC04009 leads to a work order, and how long does it typically take?"
-
-# Work order distribution + next prediction (multi-step)
-uv run plan-execute --show-plan --show-history \
-  "For equipment CWC04014, show the work order distribution and predict the next maintenance type"
-```
-
-#### Multi-server parallel query
-
-Run a question that exercises three servers with independent parallel steps:
-
-```bash
-uv run plan-execute --show-plan --show-history \
-  "What is the current date and time? Also list assets at site MAIN. Also get sensor list and failure mode list for any of the chiller at site MAIN."
-```
-
-Expected plan (3 parallel steps, no dependencies):
-
-```
-[1] utilities  : current_date_time()
-[2] iot        : assets(site_name="MAIN")
-[3] fmsr       : get_failure_modes(asset_name="chiller")
-```
-
-Expected execution output (trimmed):
-
-```
-[OK] Step 1 (utilities)
-     {"currentDateTime": "2026-02-20T17:28:39Z", "currentDateTimeDescription": "Today's date is 2026-02-20 and time is 17:28:39."}
-
-[OK] Step 2 (iot)
-     {"site_name": "MAIN", "total_assets": 1, "assets": ["Chiller 6"], "message": "found 1 assets for site_name MAIN."}
-
-[OK] Step 3 (fmsr)
-     {"asset_name": "chiller", "failure_modes": ["Compressor Overheating: Failed due to Normal wear, overheating", ...]}
-```
-
-> **Note:** Curated assets (`chiller`, `ahu`) are served from `failure_modes.yaml` without any LLM call.
-
-### Python API
-
-```python
-import asyncio
-from agent import PlanExecuteRunner
-from llm import LiteLLMBackend
-
-runner = PlanExecuteRunner(llm=LiteLLMBackend("watsonx/meta-llama/llama-3-3-70b-instruct"))
-result = asyncio.run(runner.run("What assets are available at site MAIN?"))
-print(result.answer)
-```
-
-`OrchestratorResult` fields:
-
-| Field     | Type               | Description                       |
-| --------- | ------------------ | --------------------------------- |
-| `answer`  | `str`              | Final synthesised answer          |
-| `plan`    | `Plan`             | The generated plan with its steps |
-| `history` | `list[StepResult]` | Per-step execution results        |
-
-### Bring your own LLM
-
-Implement `LLMBackend` to use any model:
-
-```python
-from llm import LLMBackend
-
-class MyLLM(LLMBackend):
-    def generate(self, prompt: str, temperature: float = 0.0) -> str:
-        ...  # call your model here
-
-runner = PlanExecuteRunner(llm=MyLLM())
-```
-
-### Add more MCP servers
-
-Pass `server_paths` to register additional servers. Keys must match the server names the planner assigns steps to:
-
-```python
-from agent import PlanExecuteRunner
-
-runner = PlanExecuteRunner(
-    llm=my_llm,
-    server_paths={
-        "iot":       "iot-mcp-server",
-        "utilities": "utilities-mcp-server",
-        "fmsr":      "fmsr-mcp-server",
-        "tsfm":      "tsfm-mcp-server",
-        "wo":        "wo-mcp-server",
-        "vibration": "vibration-mcp-server",
-    },
-)
-```
-
-> **Note:** passing `server_paths` replaces the defaults entirely. Include all servers you need.
 
 ---
 
-## Connect to Claude Desktop
+## Claude Agent
 
-Add the following to your Claude Desktop `claude_desktop_config.json`:
+`src/agent/claude_agent/` uses the **claude-agent-sdk** to drive the same MCP servers. Unlike `PlanExecuteRunner`, there is no explicit plan — the SDK's built-in agentic loop handles tool discovery, invocation, and multi-turn reasoning autonomously.
 
-```json
-{
-  "mcpServers": {
-    "utilities": {
-      "command": "/path/to/uv",
-      "args": [
-        "run",
-        "--project",
-        "/path/to/AssetOpsBench",
-        "utilities-mcp-server"
-      ]
-    },
-    "iot": {
-      "command": "/path/to/uv",
-      "args": ["run", "--project", "/path/to/AssetOpsBench", "iot-mcp-server"]
-    },
-    "fmsr": {
-      "command": "/path/to/uv",
-      "args": ["run", "--project", "/path/to/AssetOpsBench", "fmsr-mcp-server"]
-    },
-    "tsfm": {
-      "command": "/path/to/uv",
-      "args": ["run", "--project", "/path/to/AssetOpsBench", "tsfm-mcp-server"]
-    },
-    "wo": {
-      "command": "/path/to/uv",
-      "args": ["run", "--project", "/path/to/AssetOpsBench", "wo-mcp-server"]
-    },
-    "vibration": {
-      "command": "/path/to/uv",
-      "args": ["run", "--project", "/path/to/AssetOpsBench", "vibration-mcp-server"]
-    }
-  }
-}
+### How it works
+
+```
+ClaudeAgentRunner.run(question)
+  │
+  └─ claude-agent-sdk query loop
+       • connects to each MCP server over stdio
+       • Claude decides which tools to call and in what order
+       • tool calls and results are handled internally by the SDK
+       • final answer is returned as ResultMessage
+```
+
+### CLI
+
+After `uv sync`, the `claude-agent` command is available:
+
+```bash
+uv run claude-agent "$query"
+```
+
+Flags:
+
+| Flag                  | Description                                                                  |
+| --------------------- | ---------------------------------------------------------------------------- |
+| `--model-id MODEL_ID` | Claude model ID (default: `litellm_proxy/aws/claude-opus-4-6`)               |
+| `--max-turns N`       | Maximum agentic loop turns (default: 30)                                     |
+| `--show-trajectory`      | Print each turn's text, tool calls, and token usage                          |
+| `--json`              | Output full trajectory (turns, tool calls, token counts) as JSON             |
+| `--verbose`           | Show INFO-level logs on stderr                                               |
+
+The `--model-id` prefix determines the backend:
+
+| Prefix           | Backend       | Required env vars                     |
+| ---------------- | ------------- | ------------------------------------- |
+| _(none)_         | Anthropic API | `LITELLM_API_KEY`                     |
+| `litellm_proxy/` | LiteLLM proxy | `LITELLM_API_KEY`, `LITELLM_BASE_URL` |
+
+Examples:
+
+```bash
+# LiteLLM proxy (default)
+uv run claude-agent "$query"
+
+# Direct Anthropic API
+uv run claude-agent --model-id claude-opus-4-6 "$query"
+
+# Show full trajectory (turns, tool calls, token usage)
+uv run claude-agent --show-trajectory "$query"
+
+# Machine-readable trajectory
+uv run claude-agent --json "$query" | jq .turns
+```
+
+---
+
+## OpenAI Agent
+
+`src/agent/openai_agent/` uses the **[OpenAI Agents SDK](https://github.com/openai/openai-agents-python)** (`openai-agents`) to drive the same MCP servers. Like `ClaudeAgentRunner`, there is no explicit plan — the SDK's built-in agentic loop handles tool discovery, invocation, and multi-turn reasoning autonomously.
+
+### How it works
+
+```
+OpenAIAgentRunner.run(question)
+  │
+  └─ OpenAI Agents SDK Runner.run loop
+       • connects to each MCP server over stdio (MCPServerStdio)
+       • GPT decides which tools to call and in what order
+       • tool calls and results are handled internally by the SDK
+       • final answer is returned via result.final_output
+```
+
+### CLI
+
+After `uv sync`, the `openai-agent` command is available:
+
+```bash
+uv run openai-agent "$query"
+```
+
+Flags:
+
+| Flag                  | Description                                                                      |
+| --------------------- | -------------------------------------------------------------------------------- |
+| `--model-id MODEL_ID` | LiteLLM model string with `litellm_proxy/` prefix (default: `litellm_proxy/azure/gpt-5.4`) |
+| `--max-turns N`       | Maximum agentic loop turns (default: 30)                                         |
+| `--show-trajectory`   | Print each turn's text, tool calls, and token usage                              |
+| `--json`              | Output full trajectory (turns, tool calls, token counts) as JSON                 |
+| `--verbose`           | Show INFO-level logs on stderr                                                   |
+
+Required env vars: `LITELLM_API_KEY`, `LITELLM_BASE_URL`
+
+Examples:
+
+```bash
+uv run openai-agent --model-id litellm_proxy/azure/gpt-5.4 "$query"
+
+# Show full trajectory (turns, tool calls, token usage)
+uv run openai-agent --model-id litellm_proxy/azure/gpt-5.4 --show-trajectory "$query"
+
+# Machine-readable trajectory
+uv run openai-agent --model-id litellm_proxy/azure/gpt-5.4 --json "$query" | jq .turns
 ```
 
 ---
@@ -482,22 +458,34 @@ uv run pytest src/ -v
 ## Architecture
 
 ```
-┌──────────────────────────────────────────────────────┐
-│                     agent/                          │
-│                                                      │
-│  PlanExecuteRunner.run(question)                     │
-│  ┌────────────┐   ┌────────────┐   ┌──────────────┐ │
-│  │  Planner   │ → │  Executor  │ → │  Summariser  │ │
-│  │            │   │            │   │              │ │
-│  │ LLM breaks │   │ Routes each│   │ LLM combines │ │
-│  │ question   │   │ step to the│   │ step results │ │
-│  │ into steps │   │ right MCP  │   │ into answer  │ │
-│  └────────────┘   │ server via │   └──────────────┘ │
-│                   │ stdio      │                     │
-└───────────────────┼────────────┼─────────────────────┘
-                    │ MCP protocol (stdio)
-         ┌──────────┼──────────┬──────────┬──────┬───────────┐
-         ▼          ▼          ▼          ▼      ▼           ▼
-        iot     utilities    fmsr       tsfm    wo      vibration
-      (tools)    (tools)    (tools)   (tools) (tools)    (tools)
+┌──────────────────────────────────────────────────────────────┐
+│                          agent/                              │
+│                                                              │
+│  PlanExecuteRunner.run(question)                             │
+│  ┌────────────┐   ┌────────────┐   ┌──────────────┐         │
+│  │  Planner   │ → │  Executor  │ → │  Summariser  │         │
+│  │ LLM breaks │   │ Routes each│   │ LLM combines │         │
+│  │ question   │   │ step to MCP│   │ step results │         │
+│  │ into steps │   │ via stdio  │   │ into answer  │         │
+│  └────────────┘   └────────────┘   └──────────────┘         │
+│                                                              │
+│  ClaudeAgentRunner.run(question)                             │
+│  ┌─────────────────────────────────────────┐                 │
+│  │  claude-agent-sdk agentic loop          │                 │
+│  │  Claude decides tools + order autonomously               │
+│  │  Trajectory (turns, tool calls, tokens) collected        │
+│  └─────────────────────────────────────────┘                 │
+│                                                              │
+│  OpenAIAgentRunner.run(question)                             │
+│  ┌─────────────────────────────────────────┐                 │
+│  │  openai-agents SDK Runner.run loop      │                 │
+│  │  GPT decides tools + order autonomously                  │
+│  │  Trajectory (turns, tool calls, tokens) collected        │
+│  └─────────────────────────────────────────┘                 │
+└──────────────────────────┬───────────────────────────────────┘
+                           │ MCP protocol (stdio)
+         ┌─────────────────┼───────────┬──────────┬──────┬───────────┐
+         ▼                 ▼           ▼          ▼      ▼           ▼
+        iot           utilities      fmsr       tsfm    wo      vibration
+      (tools)          (tools)      (tools)   (tools) (tools)    (tools)
 ```
