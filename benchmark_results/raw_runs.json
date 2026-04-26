@@ -390,5 +390,5174 @@
         ]
       }
     ]
+  },
+  {
+    "query_id": 2,
+    "query_text": "List all failure modes of Chiller 6 that can be detected by temperature sensors and power input sensors.",
+    "baseline": [
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by temperature sensors and power input sensors.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 7.456241500040051,
+        "planning_s": 9.065657400002237,
+        "execution_s": 34.505712900077924,
+        "summarization_s": 4.261061199998949,
+        "total_s": 57.01666210003896,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.8059213000233285,
+            "tool_call_s": 0.8746803000103682,
+            "total_s": 1.680610199982766,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 1.2659055999829434,
+            "tool_call_s": 0.8148741999757476,
+            "total_s": 2.0807872000150383,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 4.00003045797348e-06,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 23.16982489998918,
+            "tool_call_s": 7.574474000022747,
+            "total_s": 30.744306800013874,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 4.700035788118839e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by temperature sensors and power input sensors.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.541516099998262,
+        "planning_s": 17.61437309999019,
+        "execution_s": 142.74028389994055,
+        "summarization_s": 4.128605599980801,
+        "total_s": 172.6314287999994,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 8.073411200020928,
+            "tool_call_s": 0.8348736999905668,
+            "total_s": 8.908294799970463,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7428802000358701,
+            "tool_call_s": 0.8168515000143088,
+            "total_s": 1.5597396999946795,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5630693000275642,
+            "tool_call_s": 0.7596339999581687,
+            "total_s": 1.322711699991487,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 3.9915814000414684,
+            "tool_call_s": 126.95793949998915,
+            "total_s": 130.94953220000025,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 5.499983672052622e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by temperature sensors and power input sensors.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.3410078000160865,
+        "planning_s": 9.282838399987668,
+        "execution_s": 13.83113130001584,
+        "summarization_s": 4.797175900021102,
+        "total_s": 35.96105220000027,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7525760999997146,
+            "tool_call_s": 0.7810061000054702,
+            "total_s": 1.5335939000360668,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 1.134589200024493,
+            "tool_call_s": 0.7929040999733843,
+            "total_s": 1.9275013000005856,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.700020559132099e-06,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 3.427832600020338,
+            "tool_call_s": 6.942192199989222,
+            "total_s": 10.370030599995516,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.7999631129205227e-06,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by temperature sensors and power input sensors.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.03136000002268702,
+        "planning_s": 8.683063799981028,
+        "execution_s": 95.94365109998034,
+        "summarization_s": 4.031543200020678,
+        "total_s": 110.47447870002361,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7188598000211641,
+            "tool_call_s": 0.010253899963572621,
+            "total_s": 0.7291238000034355,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5679092000355013,
+            "tool_call_s": 0.0073228999972343445,
+            "total_s": 0.5752385000232607,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 7.399998139590025e-06,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 3.1077545000007376,
+            "tool_call_s": 92.10641210002359,
+            "total_s": 95.21417819999624,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 5.200039595365524e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by temperature sensors and power input sensors.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.00925860001007095,
+        "planning_s": 9.433988199976739,
+        "execution_s": 10.291252600029111,
+        "summarization_s": 4.140118399984203,
+        "total_s": 25.764854400011245,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7222280999994837,
+            "tool_call_s": 0.008777600014582276,
+            "total_s": 0.7310154000297189,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5010613000486046,
+            "tool_call_s": 0.006185400008689612,
+            "total_s": 0.5072530999896117,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 6.399990525096655e-06,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 3.4302782000158913,
+            "tool_call_s": 6.129622799984645,
+            "total_s": 9.55990870000096,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.700020559132099e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by temperature sensors and power input sensors.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.012634099985007197,
+        "planning_s": 9.628884800011292,
+        "execution_s": 11.901128800120205,
+        "summarization_s": 4.4089411000022665,
+        "total_s": 27.720982400001958,
+        "num_steps": 4,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.3998027000343427,
+            "tool_call_s": 0.017123899946454912,
+            "total_s": 0.4169390000170097,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.8389142999658361,
+            "tool_call_s": 0.01688710000598803,
+            "total_s": 0.8558141000103205,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5957413999713026,
+            "tool_call_s": 0.006097799981944263,
+            "total_s": 0.6018462000065483,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 3.8532104999758303,
+            "tool_call_s": 6.774701600021217,
+            "total_s": 10.627931200026069,
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "query_id": 3,
+    "query_text": "In May and June of 2020, numerous anomalies and alerts have been reported for Chiller 9 with equipment ID CWC04009. Could you review them and suggest appropriate work orders or actions?",
+    "baseline": [
+      {
+        "question": "In May and June of 2020, numerous anomalies and alerts have been reported for Chiller 9 with equipment ID CWC04009. Could you review them and suggest appropriate work orders or actions?",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.3458050999906845,
+        "planning_s": 16.53725569997914,
+        "execution_s": 94.4490899000084,
+        "summarization_s": 11.967447999981232,
+        "total_s": 132.44615400000475,
+        "num_steps": 8,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 1.3062694999971427,
+            "tool_call_s": 1.9655303999898024,
+            "total_s": 3.271810000005644,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 11.75323719996959,
+            "tool_call_s": 1.9412005000049248,
+            "total_s": 13.694444600027055,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 8.567602400027681,
+            "tool_call_s": 2.2534693999914452,
+            "total_s": 10.821079200017266,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 9.045385200006422,
+            "tool_call_s": 2.2777930999873206,
+            "total_s": 11.323190699971747,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 8.56643659999827,
+            "tool_call_s": 0.762629900011234,
+            "total_s": 9.329075000016019,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "iot",
+            "tool": "history",
+            "llm_resolve_s": 8.8654353999882,
+            "tool_call_s": 0.9304972999962047,
+            "total_s": 9.795940200041514,
+            "success": true
+          },
+          {
+            "step_number": 7,
+            "server": "tsfm",
+            "tool": "run_integrated_tsad",
+            "llm_resolve_s": 35.12142189999577,
+            "tool_call_s": 1.0921183999744244,
+            "total_s": 36.21354759996757,
+            "success": true
+          },
+          {
+            "step_number": 8,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.5999615900218487e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "In May and June of 2020, numerous anomalies and alerts have been reported for Chiller 9 with equipment ID CWC04009. Could you review them and suggest appropriate work orders or actions?",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.3824599999934435,
+        "planning_s": 16.411372799950186,
+        "execution_s": 59.81059740000637,
+        "summarization_s": 25.119570899987593,
+        "total_s": 110.83251049998216,
+        "num_steps": 8,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 1.1923402000102215,
+            "tool_call_s": 1.8772765999892727,
+            "total_s": 3.069628399971407,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 1.3482696000137366,
+            "tool_call_s": 1.9237921999883838,
+            "total_s": 3.2720700000063516,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 8.39297380001517,
+            "tool_call_s": 2.36179599998286,
+            "total_s": 10.754777100053616,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 9.040844700008165,
+            "tool_call_s": 2.3432322000153363,
+            "total_s": 11.38408549997257,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 8.125725399993826,
+            "tool_call_s": 0.7958561999839731,
+            "total_s": 8.921589899982791,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "iot",
+            "tool": "history",
+            "llm_resolve_s": 9.175469000008889,
+            "tool_call_s": 0.8539658000227064,
+            "total_s": 10.029442099970765,
+            "success": true
+          },
+          {
+            "step_number": 7,
+            "server": "tsfm",
+            "tool": "run_integrated_tsad",
+            "llm_resolve_s": 11.186104200023692,
+            "tool_call_s": 1.1928888999973424,
+            "total_s": 12.379001800029073,
+            "success": true
+          },
+          {
+            "step_number": 8,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.600019797682762e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "In May and June of 2020, numerous anomalies and alerts have been reported for Chiller 9 with equipment ID CWC04009. Could you review them and suggest appropriate work orders or actions?",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 9.665239399997517,
+        "planning_s": 28.183909699961077,
+        "execution_s": 64.71187160006957,
+        "summarization_s": 13.188568599987775,
+        "total_s": 119.16194809996523,
+        "num_steps": 8,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 1.2283486999804154,
+            "tool_call_s": 2.1244706999859773,
+            "total_s": 3.352844399982132,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 1.3403090999927372,
+            "tool_call_s": 2.347985200001858,
+            "total_s": 3.688313000020571,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 8.515885600005277,
+            "tool_call_s": 2.823240400000941,
+            "total_s": 11.339145899983123,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 9.284619199985173,
+            "tool_call_s": 2.975844300002791,
+            "total_s": 12.260486000042874,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 8.242483199981507,
+            "tool_call_s": 0.8608346999972127,
+            "total_s": 9.10333760001231,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "iot",
+            "tool": "history",
+            "llm_resolve_s": 11.809476599970367,
+            "tool_call_s": 0.9154249000130221,
+            "total_s": 12.724922800029162,
+            "success": true
+          },
+          {
+            "step_number": 7,
+            "server": "tsfm",
+            "tool": "run_integrated_tsad",
+            "llm_resolve_s": 10.932537399989087,
+            "tool_call_s": 1.310255500022322,
+            "total_s": 12.242812799988315,
+            "success": true
+          },
+          {
+            "step_number": 8,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 9.100011084228754e-06,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "In May and June of 2020, numerous anomalies and alerts have been reported for Chiller 9 with equipment ID CWC04009. Could you review them and suggest appropriate work orders or actions?",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.10592359997099265,
+        "planning_s": 15.863589600019623,
+        "execution_s": 29.83655429992359,
+        "summarization_s": 11.412774399970658,
+        "total_s": 61.4385115999612,
+        "num_steps": 8,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 1.3135718999546953,
+            "tool_call_s": 1.2616002000286244,
+            "total_s": 2.5751992000150494,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 4.0540622000116855,
+            "tool_call_s": 0.030837800004519522,
+            "total_s": 4.084915600018576,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 1.4305531999561936,
+            "tool_call_s": 0.9610122999874875,
+            "total_s": 2.391589699953329,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 1.6957006000448018,
+            "tool_call_s": 1.3476251999964006,
+            "total_s": 3.04334309999831,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "iot",
+            "tool": "history",
+            "llm_resolve_s": 12.150146599975415,
+            "tool_call_s": 0.12271779996808618,
+            "total_s": 12.272887300001457,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 9.202057799964678,
+            "tool_call_s": 4.2750026999856345,
+            "total_s": 13.477081999997608,
+            "success": true
+          },
+          {
+            "step_number": 7,
+            "server": "tsfm",
+            "tool": "run_integrated_tsad",
+            "llm_resolve_s": 10.904222800047137,
+            "tool_call_s": 0.011159699992276728,
+            "total_s": 10.915409000008367,
+            "success": true
+          },
+          {
+            "step_number": 8,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.0400020983070135e-05,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "In May and June of 2020, numerous anomalies and alerts have been reported for Chiller 9 with equipment ID CWC04009. Could you review them and suggest appropriate work orders or actions?",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.05465840001124889,
+        "planning_s": 16.458286899956875,
+        "execution_s": 39.490227599977516,
+        "summarization_s": 15.644468099984806,
+        "total_s": 76.52315980003914,
+        "num_steps": 8,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 1.2125949999899603,
+            "tool_call_s": 1.152535600005649,
+            "total_s": 2.3651567000197247,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7146770999534056,
+            "tool_call_s": 0.03188999998383224,
+            "total_s": 0.7465856000198983,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 1.4648219000082463,
+            "tool_call_s": 0.9818625000189058,
+            "total_s": 2.4467070999671705,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 1.518684500013478,
+            "tool_call_s": 1.62931029999163,
+            "total_s": 3.1480121000204235,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "iot",
+            "tool": "history",
+            "llm_resolve_s": 1.2449761000461876,
+            "tool_call_s": 0.11577630002284423,
+            "total_s": 1.3607695000246167,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 29.711820400028955,
+            "tool_call_s": 4.2638789000338875,
+            "total_s": 33.97572119999677,
+            "success": true
+          },
+          {
+            "step_number": 7,
+            "server": "tsfm",
+            "tool": "run_integrated_tsad",
+            "llm_resolve_s": 17.544491000007838,
+            "tool_call_s": 0.03537619998678565,
+            "total_s": 17.579885100014508,
+            "success": true
+          },
+          {
+            "step_number": 8,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.0500021744519472e-05,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "In May and June of 2020, numerous anomalies and alerts have been reported for Chiller 9 with equipment ID CWC04009. Could you review them and suggest appropriate work orders or actions?",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.04464629996800795,
+        "planning_s": 16.499809800006915,
+        "execution_s": 77.0214033999946,
+        "summarization_s": 3.8550201000180095,
+        "total_s": 101.91681409999728,
+        "num_steps": 8,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 1.2164587000152096,
+            "tool_call_s": 1.1503957000095397,
+            "total_s": 2.3668799999868497,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 5.642407400009688,
+            "tool_call_s": 0.030842999985907227,
+            "total_s": 5.673267899954226,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 7.875428500003181,
+            "success": false
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 15.253838500007987,
+            "tool_call_s": 0.6369910000357777,
+            "total_s": 15.89084849995561,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "iot",
+            "tool": "history",
+            "llm_resolve_s": 14.078281999973115,
+            "tool_call_s": 0.14211359998444095,
+            "total_s": 14.220416099997237,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 54.81784259999404,
+            "tool_call_s": 0.6377658999990672,
+            "total_s": 55.4556274000206,
+            "success": true
+          },
+          {
+            "step_number": 7,
+            "server": "tsfm",
+            "tool": "run_integrated_tsad",
+            "llm_resolve_s": 4.133733800030313,
+            "tool_call_s": 0.04219489998649806,
+            "total_s": 4.1759484999929555,
+            "success": true
+          },
+          {
+            "step_number": 8,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.1000025551766157e-05,
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "query_id": 4,
+    "query_text": "After checking existing work orders, anomalies and alerts in May and June 2020 for Chiller 9 with equipment ID CWC04009, should I recommend a new work order or is it too early to decide for July 2020?",
+    "baseline": [
+      {
+        "question": "After checking existing work orders, anomalies and alerts in May and June 2020 for Chiller 9 with equipment ID CWC04009, should I recommend a new work order or is it too early to decide for July 2020?",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 8.054251399997156,
+        "planning_s": 11.518267799983732,
+        "execution_s": 31.07933530001901,
+        "summarization_s": 9.537028799997643,
+        "total_s": 61.48500290000811,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 1.668995400017593,
+            "tool_call_s": 2.3636672000284307,
+            "total_s": 4.032689700019546,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 1.4777511000283994,
+            "tool_call_s": 2.602650199958589,
+            "total_s": 4.080416699987836,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 8.501426700036973,
+            "tool_call_s": 2.788126800034661,
+            "total_s": 11.28956449998077,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 9.077106499986257,
+            "tool_call_s": 2.5994676999980584,
+            "total_s": 11.676659899996594,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 4.500034265220165e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "After checking existing work orders, anomalies and alerts in May and June 2020 for Chiller 9 with equipment ID CWC04009, should I recommend a new work order or is it too early to decide for July 2020?",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.929897400026675,
+        "planning_s": 11.290899000014178,
+        "execution_s": 29.755617499933578,
+        "summarization_s": 12.157428700011224,
+        "total_s": 61.42241619998822,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 1.749139000021387,
+            "tool_call_s": 2.215216099983081,
+            "total_s": 3.9643852000008337,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 1.4156113999779336,
+            "tool_call_s": 2.189691999985371,
+            "total_s": 3.6053242000052705,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 8.535264600010123,
+            "tool_call_s": 2.5261430999962613,
+            "total_s": 11.06142829998862,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 8.63215969997691,
+            "tool_call_s": 2.4922856999910437,
+            "total_s": 11.12447019998217,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 9.599956683814526e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "After checking existing work orders, anomalies and alerts in May and June 2020 for Chiller 9 with equipment ID CWC04009, should I recommend a new work order or is it too early to decide for July 2020?",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.803150599997025,
+        "planning_s": 11.031665699963924,
+        "execution_s": 19.208761600079015,
+        "summarization_s": 3.290470599953551,
+        "total_s": 41.65566220000619,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 1.1556375000509433,
+            "tool_call_s": 2.438284800038673,
+            "total_s": 3.5939561999985017,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 0.7971220000181347,
+            "success": false
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 1.387105799978599,
+            "tool_call_s": 2.891669200034812,
+            "total_s": 4.278799500025343,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 8.553598600032274,
+            "tool_call_s": 1.985247399949003,
+            "total_s": 10.538874600024428,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 9.300012607127428e-06,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "After checking existing work orders, anomalies and alerts in May and June 2020 for Chiller 9 with equipment ID CWC04009, should I recommend a new work order or is it too early to decide for July 2020?",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.09422570001333952,
+        "planning_s": 10.76087009999901,
+        "execution_s": 28.843553399958182,
+        "summarization_s": 10.465918400033843,
+        "total_s": 51.706575999967754,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 1.2646101000136696,
+            "tool_call_s": 0.8829995000269264,
+            "total_s": 2.1476350000011735,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 3.083696899993811,
+            "tool_call_s": 0.9418715999927372,
+            "total_s": 4.02559040003689,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 8.513384099991526,
+            "tool_call_s": 0.624932800012175,
+            "total_s": 9.138338499993552,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 9.153290799993556,
+            "tool_call_s": 4.377114599978086,
+            "total_s": 13.530429199978244,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.0899966582655907e-05,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "After checking existing work orders, anomalies and alerts in May and June 2020 for Chiller 9 with equipment ID CWC04009, should I recommend a new work order or is it too early to decide for July 2020?",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.04737889999523759,
+        "planning_s": 11.417882100038696,
+        "execution_s": 106.5564510000404,
+        "summarization_s": 10.358586999995168,
+        "total_s": 129.89562349999323,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 2.8599405999993905,
+            "tool_call_s": 1.1740480000153184,
+            "total_s": 4.034013400028925,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 2.262867000012193,
+            "tool_call_s": 0.9461257999646477,
+            "total_s": 3.2090135000180453,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 8.840229100023862,
+            "tool_call_s": 0.6492408000049181,
+            "total_s": 9.489488799998071,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 85.70594270003494,
+            "tool_call_s": 4.116562899958808,
+            "total_s": 89.82252520002658,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.0599964298307896e-05,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "After checking existing work orders, anomalies and alerts in May and June 2020 for Chiller 9 with equipment ID CWC04009, should I recommend a new work order or is it too early to decide for July 2020?",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.04782580002211034,
+        "planning_s": 11.096886699961033,
+        "execution_s": 30.923728399910033,
+        "summarization_s": 17.499574100016616,
+        "total_s": 61.143232900009025,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 1.2681456999853253,
+            "tool_call_s": 0.8985704000224359,
+            "total_s": 2.1667365999892354,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 5.185963800002355,
+            "tool_call_s": 0.9294847999699414,
+            "total_s": 6.115471700031776,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 8.876585699967109,
+            "tool_call_s": 0.634473700018134,
+            "total_s": 9.511099199997261,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 8.99144489999162,
+            "tool_call_s": 4.13755670003593,
+            "total_s": 13.129022600012831,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 9.399955160915852e-06,
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "query_id": 5,
+    "query_text": "What are the anomaly detection results for Chiller 9's Tonnage and Power Input in the week of 2020-04-27 at the MAIN site?",
+    "baseline": [
+      {
+        "question": "What are the anomaly detection results for Chiller 9's Tonnage and Power Input in the week of 2020-04-27 at the MAIN site?",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 7.242853099945933,
+        "planning_s": 12.02661669999361,
+        "execution_s": 21.250069299945608,
+        "summarization_s": 2.0848679000046104,
+        "total_s": 44.751830799970776,
+        "num_steps": 6,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.5506659999955446,
+            "tool_call_s": 6.200812099967152,
+            "total_s": 6.751489099988248,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7583275999641046,
+            "tool_call_s": 2.7772836000076495,
+            "total_s": 3.535618899972178,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "history",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 0.20483709999825805,
+            "success": false
+          },
+          {
+            "step_number": 4,
+            "server": "tsfm",
+            "tool": "run_tsfm_forecasting",
+            "llm_resolve_s": 3.1353681000182405,
+            "tool_call_s": 1.3527353000245057,
+            "total_s": 4.48811159998877,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "tsfm",
+            "tool": "run_tsad",
+            "llm_resolve_s": 5.0593201000010595,
+            "tool_call_s": 1.2106820999761112,
+            "total_s": 6.270009600033518,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.9999646358191967e-06,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": []
+  },
+  {
+    "query_id": 6,
+    "query_text": "List all failure modes of Chiller 6 at MAIN site that can be detected by Chiller 6 Chiller Efficiency.",
+    "baseline": [
+      {
+        "question": "List all failure modes of Chiller 6 at MAIN site that can be detected by Chiller 6 Chiller Efficiency.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 7.545113200030755,
+        "planning_s": 9.920028600026853,
+        "execution_s": 96.1177311000065,
+        "summarization_s": 4.439513199962676,
+        "total_s": 119.67269650002709,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.4744732999824919,
+            "tool_call_s": 6.228818200004753,
+            "total_s": 6.70329999999376,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.869971199950669,
+            "tool_call_s": 1.075401200039778,
+            "total_s": 1.9453801999916323,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.700020559132099e-06,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.7100356000009924,
+            "tool_call_s": 0.7987422000151128,
+            "total_s": 1.5087851000134833,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 3.450978100008797,
+            "tool_call_s": 82.50927020004019,
+            "total_s": 85.96026309998706,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 at MAIN site that can be detected by Chiller 6 Chiller Efficiency.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.7904145999928005,
+        "planning_s": 72.5027147999499,
+        "execution_s": 22.839791600068565,
+        "summarization_s": 3.6294254999957047,
+        "total_s": 107.58871600002749,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.5217631999985315,
+            "tool_call_s": 6.245526599988807,
+            "total_s": 6.767314800003078,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7160401999717578,
+            "tool_call_s": 1.0918827999848872,
+            "total_s": 1.807947100023739,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5878054000204429,
+            "tool_call_s": 0.8392898999736644,
+            "total_s": 1.4271175999892876,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 3.767463999975007,
+            "tool_call_s": 9.069914899999276,
+            "total_s": 12.837400700023863,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.1400028597563505e-05,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 at MAIN site that can be detected by Chiller 6 Chiller Efficiency.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 7.830466800020076,
+        "planning_s": 9.689253700023983,
+        "execution_s": 79.35482589993626,
+        "summarization_s": 4.806706800009124,
+        "total_s": 104.02685899997596,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.47082719998434186,
+            "tool_call_s": 6.783668699965347,
+            "total_s": 7.254514499974903,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7028217999613844,
+            "tool_call_s": 1.4244968999992125,
+            "total_s": 2.1273396000033244,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 9.599956683814526e-06,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5611762999906205,
+            "tool_call_s": 0.9759946999838576,
+            "total_s": 1.5371893999981694,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 3.6555852000019513,
+            "tool_call_s": 64.78016020002542,
+            "total_s": 68.43577280000318,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "List all failure modes of Chiller 6 at MAIN site that can be detected by Chiller 6 Chiller Efficiency.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.05072109994944185,
+        "planning_s": 9.747755600023083,
+        "execution_s": 35.46246440010145,
+        "summarization_s": 3.7577688999590464,
+        "total_s": 51.20433699997375,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.9076201999559999,
+            "tool_call_s": 5.376807500026189,
+            "total_s": 6.284450999984983,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.6983673999784514,
+            "tool_call_s": 0.226376699982211,
+            "total_s": 0.9247622999828309,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5958455999498256,
+            "tool_call_s": 0.02568960003554821,
+            "total_s": 0.6215520999976434,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 21.930203199968673,
+            "tool_call_s": 6.322169799997937,
+            "total_s": 28.2523913999903,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 7.90000194683671e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 at MAIN site that can be detected by Chiller 6 Chiller Efficiency.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.00903469999320805,
+        "planning_s": 8.887227300030645,
+        "execution_s": 146.7941577999154,
+        "summarization_s": 4.028906500025187,
+        "total_s": 162.47739259997616,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.47343039995757863,
+            "tool_call_s": 5.491703499981668,
+            "total_s": 5.965155499987304,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.8725043999729678,
+            "tool_call_s": 0.23438789998181164,
+            "total_s": 1.1069137000013143,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 4.614652600022964,
+            "tool_call_s": 0.028490900003816932,
+            "total_s": 4.643163000000641,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.2199976481497288e-05,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 3.421375000034459,
+            "tool_call_s": 132.76305830001365,
+            "total_s": 136.18446810002206,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 at MAIN site that can be detected by Chiller 6 Chiller Efficiency.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.05436440004268661,
+        "planning_s": 8.892670500034,
+        "execution_s": 104.86878689995501,
+        "summarization_s": 3.793009200016968,
+        "total_s": 120.35500790004153,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 18.463025700009894,
+            "tool_call_s": 5.457801500044297,
+            "total_s": 23.920855099975597,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 30.503867199993692,
+            "tool_call_s": 0.22339679999276996,
+            "total_s": 30.727284400025383,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5753194999997504,
+            "tool_call_s": 0.027475300012156367,
+            "total_s": 0.602814199985005,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.0000017937272787e-05,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 35.86466840002686,
+            "tool_call_s": 14.354580599989276,
+            "total_s": 50.2192791000125,
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "query_id": 7,
+    "query_text": "List all failure modes of Chiller 6 at MAIN site that can be detected by temperature sensors and power input sensors.",
+    "baseline": [
+      {
+        "question": "List all failure modes of Chiller 6 at MAIN site that can be detected by temperature sensors and power input sensors.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 7.13749159994768,
+        "planning_s": 9.15430410002591,
+        "execution_s": 142.35809829999926,
+        "summarization_s": 9.605495599971619,
+        "total_s": 170.034113599977,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.4458327000029385,
+            "tool_call_s": 6.245577499968931,
+            "total_s": 6.69143610005267,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7894665999920107,
+            "tool_call_s": 1.070942800026387,
+            "total_s": 1.8604303000029176,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5696675999788567,
+            "tool_call_s": 0.8410461000166833,
+            "total_s": 1.4107341999770142,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 9.000010322779417e-06,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 5.487972199975047,
+            "tool_call_s": 126.90750279999338,
+            "total_s": 132.39548869995633,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 at MAIN site that can be detected by temperature sensors and power input sensors.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.774093499989249,
+        "planning_s": 8.967207399953622,
+        "execution_s": 39.89046869985759,
+        "summarization_s": 12.917224500037264,
+        "total_s": 70.09236619999865,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.4522904999903403,
+            "tool_call_s": 5.959780499979388,
+            "total_s": 6.412083999952301,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.8045099999872036,
+            "tool_call_s": 1.0733546999981627,
+            "total_s": 1.877871899981983,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.577410499972757,
+            "tool_call_s": 0.7881006000097841,
+            "total_s": 1.3655177999753505,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.9999646358191967e-06,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 4.696857300004922,
+            "tool_call_s": 25.538124400016386,
+            "total_s": 30.234991999983322,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 at MAIN site that can be detected by temperature sensors and power input sensors.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.736554000002798,
+        "planning_s": 9.62566419999348,
+        "execution_s": 142.87241830001585,
+        "summarization_s": 38.4963794000214,
+        "total_s": 199.32224660000065,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.4836232999805361,
+            "tool_call_s": 5.9220037999912165,
+            "total_s": 6.405636499985121,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.8437905999599025,
+            "tool_call_s": 1.117161100031808,
+            "total_s": 1.9609591999906115,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.6247734000207856,
+            "tool_call_s": 0.765077400021255,
+            "total_s": 1.389858600043226,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.7999631129205227e-06,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 5.464814600010868,
+            "tool_call_s": 127.65114149998408,
+            "total_s": 133.11596120003378,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "List all failure modes of Chiller 6 at MAIN site that can be detected by temperature sensors and power input sensors.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.029089299961924553,
+        "planning_s": 20.281391600030474,
+        "execution_s": 70.85898290004116,
+        "summarization_s": 72.62424129998544,
+        "total_s": 165.67540059995372,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.45505529997171834,
+            "tool_call_s": 5.068546800001059,
+            "total_s": 5.523616200021934,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.8398435999988578,
+            "tool_call_s": 0.19407219998538494,
+            "total_s": 1.0339252999983728,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5717574000009336,
+            "tool_call_s": 0.006543499999679625,
+            "total_s": 0.5783057999797165,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 3.1999661587178707e-06,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 5.179046000004746,
+            "tool_call_s": 59.12198489997536,
+            "total_s": 64.30103770003188,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 at MAIN site that can be detected by temperature sensors and power input sensors.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.05047680001007393,
+        "planning_s": 9.521504600008484,
+        "execution_s": 89.63120099995285,
+        "summarization_s": 5.48058360000141,
+        "total_s": 107.40449719998287,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.42052719998173416,
+            "tool_call_s": 5.340657700027805,
+            "total_s": 5.76120589999482,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.8473029000451788,
+            "tool_call_s": 0.22220760001800954,
+            "total_s": 1.0695312999887392,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.6394679000368342,
+            "tool_call_s": 0.025453199981711805,
+            "total_s": 0.6649386000353843,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 53.48450890003005,
+            "tool_call_s": 29.314768200041726,
+            "total_s": 82.79931090003811,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.1399970389902592e-05,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 at MAIN site that can be detected by temperature sensors and power input sensors.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.019768500002101064,
+        "planning_s": 9.255031500011683,
+        "execution_s": 51.6089864000096,
+        "summarization_s": 2.5119617999880575,
+        "total_s": 66.00592879997566,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 1.02770530001726,
+            "tool_call_s": 5.017277899954934,
+            "total_s": 6.04499260004377,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7071261000237428,
+            "tool_call_s": 0.19575300003634766,
+            "total_s": 0.9028878000099212,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5487348000169732,
+            "tool_call_s": 0.005280099983792752,
+            "total_s": 0.5540206999867223,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 5.499983672052622e-06,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 4.665076799981762,
+            "tool_call_s": 39.995190799993,
+            "total_s": 44.66028800001368,
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "query_id": 8,
+    "query_text": "List all failure modes of asset Chiller.",
+    "baseline": [
+      {
+        "question": "List all failure modes of asset Chiller.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 7.8340925999800675,
+        "planning_s": 3.7070294999866746,
+        "execution_s": 1.4745843000127934,
+        "summarization_s": 2.8386430999962613,
+        "total_s": 16.70212019997416,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.6618431999813765,
+            "tool_call_s": 0.8127157999551855,
+            "total_s": 1.4745843000127934,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of asset Chiller.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 7.158311200037133,
+        "planning_s": 29.41586870001629,
+        "execution_s": 1.4966223000083119,
+        "summarization_s": 3.469225100008771,
+        "total_s": 42.46107620000839,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.632269499998074,
+            "tool_call_s": 0.8643272999906912,
+            "total_s": 1.4966223000083119,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of asset Chiller.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 7.616645299945958,
+        "planning_s": 3.702557600045111,
+        "execution_s": 76.97293710004305,
+        "summarization_s": 3.0929257000098005,
+        "total_s": 92.24542160000419,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 76.14390889997594,
+            "tool_call_s": 0.8290023999870755,
+            "total_s": 76.97293710004305,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "List all failure modes of asset Chiller.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.10623589996248484,
+        "planning_s": 3.5229994999826886,
+        "execution_s": 0.4913155999965966,
+        "summarization_s": 3.0882741999812424,
+        "total_s": 8.038314800010994,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.47118350001983345,
+            "tool_call_s": 0.01978659996530041,
+            "total_s": 0.4909959000069648,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of asset Chiller.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.045745099952910095,
+        "planning_s": 5.675433300028089,
+        "execution_s": 8.185666000004858,
+        "summarization_s": 2.9272038000053726,
+        "total_s": 17.783658000000287,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 8.15899259998696,
+            "tool_call_s": 0.026322600024286658,
+            "total_s": 8.185340300027747,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of asset Chiller.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.04737449996173382,
+        "planning_s": 4.620402699976694,
+        "execution_s": 0.579743399983272,
+        "summarization_s": 67.20499110000674,
+        "total_s": 73.29254179995041,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5562343999627046,
+            "tool_call_s": 0.023144999984651804,
+            "total_s": 0.5794029000098817,
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "query_id": 9,
+    "query_text": "List all failure modes of asset Chiller 6.",
+    "baseline": [
+      {
+        "question": "List all failure modes of asset Chiller 6.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.468975500029046,
+        "planning_s": 3.177333700004965,
+        "execution_s": 1.3747660999651998,
+        "summarization_s": 2.9824165999889374,
+        "total_s": 14.850798400002532,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5585275000194088,
+            "tool_call_s": 0.8162143000517972,
+            "total_s": 1.3747660999651998,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of asset Chiller 6.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.761043199978303,
+        "planning_s": 3.5816206999588758,
+        "execution_s": 1.4225168999982998,
+        "summarization_s": 3.5047515999758616,
+        "total_s": 16.05106159998104,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5912014000350609,
+            "tool_call_s": 0.8312903000041842,
+            "total_s": 1.4225168999982998,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of asset Chiller 6.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 7.05037239997182,
+        "planning_s": 3.4567285999655724,
+        "execution_s": 1.4268611999577843,
+        "summarization_s": 16.06467110000085,
+        "total_s": 28.869680700008757,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5732199000194669,
+            "tool_call_s": 0.8536172999884002,
+            "total_s": 1.4268611999577843,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "List all failure modes of asset Chiller 6.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.07515440002316609,
+        "planning_s": 3.346022300014738,
+        "execution_s": 0.5331764000002295,
+        "summarization_s": 2.9723273999989033,
+        "total_s": 7.75643469998613,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5168604999780655,
+            "tool_call_s": 0.01598799997009337,
+            "total_s": 0.5328686999855563,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of asset Chiller 6.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.04662570002255961,
+        "planning_s": 3.1162851999979466,
+        "execution_s": 57.47614069998963,
+        "summarization_s": 2.95972449996043,
+        "total_s": 64.64414539997233,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 57.44931870000437,
+            "tool_call_s": 0.02649560000281781,
+            "total_s": 57.47583810001379,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of asset Chiller 6.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.04612519999500364,
+        "planning_s": 3.041655000008177,
+        "execution_s": 0.534532500023488,
+        "summarization_s": 11.707506400009152,
+        "total_s": 16.169391899951734,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.513672899978701,
+            "tool_call_s": 0.020523799990769476,
+            "total_s": 0.5342197999707423,
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "query_id": 10,
+    "query_text": "List all failure modes of asset Chiller 9.",
+    "baseline": [
+      {
+        "question": "List all failure modes of asset Chiller 9.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 7.052851799991913,
+        "planning_s": 4.187883199949283,
+        "execution_s": 1.4262761999852955,
+        "summarization_s": 2.7973065999685787,
+        "total_s": 16.31099169998197,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5821439000428654,
+            "tool_call_s": 0.8441061000339687,
+            "total_s": 1.4262761999852955,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of asset Chiller 9.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.643289900035597,
+        "planning_s": 3.5830931999953464,
+        "execution_s": 1.3260524999932386,
+        "summarization_s": 3.2937445999705233,
+        "total_s": 15.67518730001757,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5110278999782167,
+            "tool_call_s": 0.8149933000095189,
+            "total_s": 1.3260524999932386,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of asset Chiller 9.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.954652599990368,
+        "planning_s": 3.688192599976901,
+        "execution_s": 18.681705700000748,
+        "summarization_s": 3.0184232000028715,
+        "total_s": 33.21446749998722,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 17.86497799999779,
+            "tool_call_s": 0.8167010999750346,
+            "total_s": 18.681705700000748,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "List all failure modes of asset Chiller 9.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.08135669998591766,
+        "planning_s": 4.260788599960506,
+        "execution_s": 0.5770649000187404,
+        "summarization_s": 3.5009061999735422,
+        "total_s": 9.224988500005566,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5577875000308268,
+            "tool_call_s": 0.018895499990321696,
+            "total_s": 0.5767070999718271,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of asset Chiller 9.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.04878449998795986,
+        "planning_s": 3.9180447999970056,
+        "execution_s": 0.5503024000208825,
+        "summarization_s": 2.95493050001096,
+        "total_s": 8.268221700040158,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5295284999883734,
+            "tool_call_s": 0.020410099998116493,
+            "total_s": 0.5499620999908075,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of asset Chiller 9.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.04679509997367859,
+        "planning_s": 4.033604099997319,
+        "execution_s": 0.605639900022652,
+        "summarization_s": 3.135578599991277,
+        "total_s": 8.668260500009637,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5856193999643438,
+            "tool_call_s": 0.019674799987114966,
+            "total_s": 0.6053157999995165,
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "query_id": 11,
+    "query_text": "List all failure modes of asset Wind Turbine.",
+    "baseline": [
+      {
+        "question": "List all failure modes of asset Wind Turbine.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.955189500004053,
+        "planning_s": 4.16303140000673,
+        "execution_s": 7.413422099954914,
+        "summarization_s": 2.962429400009569,
+        "total_s": 22.323394800012466,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5066556999809109,
+            "tool_call_s": 6.9067409000126645,
+            "total_s": 7.413422099954914,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of asset Wind Turbine.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.695972499961499,
+        "planning_s": 4.065558800008148,
+        "execution_s": 7.397534799994901,
+        "summarization_s": 10.87322629999835,
+        "total_s": 29.849746399966534,
+        "num_steps": 2,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.3599987141788006e-05,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.49789310002233833,
+            "tool_call_s": 6.89961249998305,
+            "total_s": 7.397521200007759,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of asset Wind Turbine.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.642474099993706,
+        "planning_s": 3.3724795000161976,
+        "execution_s": 7.7481468000332825,
+        "summarization_s": 2.9013133000116795,
+        "total_s": 21.480485899955966,
+        "num_steps": 2,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.5300000086426735e-05,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5418007000116631,
+            "tool_call_s": 7.206311300047673,
+            "total_s": 7.748131500033196,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "List all failure modes of asset Wind Turbine.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.07635520002804697,
+        "planning_s": 3.284707000013441,
+        "execution_s": 6.232191500021145,
+        "summarization_s": 3.1701296999817714,
+        "total_s": 14.42345140001271,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.4718506000353955,
+            "tool_call_s": 5.760028500051703,
+            "total_s": 6.23190060001798,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of asset Wind Turbine.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.04731990001164377,
+        "planning_s": 4.615461999957915,
+        "execution_s": 6.69066240004031,
+        "summarization_s": 3.433619000017643,
+        "total_s": 16.51910170004703,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5260322000249289,
+            "tool_call_s": 6.1642564999638125,
+            "total_s": 6.690309799974784,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of asset Wind Turbine.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.0464153999928385,
+        "planning_s": 54.34723739995388,
+        "execution_s": 26.961179900041316,
+        "summarization_s": 52.6871039000107,
+        "total_s": 135.71547409996856,
+        "num_steps": 1,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 15.049766000011005,
+            "tool_call_s": 11.911089300003368,
+            "total_s": 26.96087870001793,
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "query_id": 12,
+    "query_text": "List all failure modes of Chiller 6 that can be detected by Chiller 6 Supply Temperature.",
+    "baseline": [
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by Chiller 6 Supply Temperature.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.694623299990781,
+        "planning_s": 7.122478899953421,
+        "execution_s": 33.60210749995895,
+        "summarization_s": 3.4698513000039384,
+        "total_s": 52.50114909996046,
+        "num_steps": 4,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 19.875924599997234,
+            "tool_call_s": 0.8279494000016712,
+            "total_s": 20.703902199980803,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 1.0997412000433542,
+            "tool_call_s": 0.7998625000473112,
+            "total_s": 1.8996277999831364,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 3.424567300011404,
+            "tool_call_s": 7.573978699976578,
+            "total_s": 10.998568999988493,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 8.500006515532732e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by Chiller 6 Supply Temperature.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.634731700003613,
+        "planning_s": 7.957575899956282,
+        "execution_s": 3.3575710999430157,
+        "summarization_s": 2.9338662999798544,
+        "total_s": 22.548774900031276,
+        "num_steps": 4,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7213279000134207,
+            "tool_call_s": 0.9006085000000894,
+            "total_s": 1.62195989995962,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.6317654000013135,
+            "tool_call_s": 0.8948183000320569,
+            "total_s": 1.5266028000041842,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 0.20899880002252758,
+            "success": false
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 9.599956683814526e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by Chiller 6 Supply Temperature.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.62108630000148,
+        "planning_s": 7.886877899989486,
+        "execution_s": 43.90396429999964,
+        "summarization_s": 3.90260719996877,
+        "total_s": 63.9950780000072,
+        "num_steps": 4,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7022838999982923,
+            "tool_call_s": 0.8569756000069901,
+            "total_s": 1.5592884999932721,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5759295999887399,
+            "tool_call_s": 0.8250926999608055,
+            "total_s": 1.4010445000021718,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 11.025550899968948,
+            "tool_call_s": 29.918043199984822,
+            "total_s": 40.94362269999692,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 8.600007276982069e-06,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by Chiller 6 Supply Temperature.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.07912980002583936,
+        "planning_s": 6.774898299947381,
+        "execution_s": 124.51662770000985,
+        "summarization_s": 1.1505880000186153,
+        "total_s": 134.68772099999478,
+        "num_steps": 4,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.8447328000329435,
+            "tool_call_s": 0.018999199965037405,
+            "total_s": 0.8637553000007756,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 4.403027000022121,
+            "tool_call_s": 0.026217999984510243,
+            "total_s": 4.4292621000204235,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 120.08653939998476,
+            "success": false
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.2200034689158201e-05,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by Chiller 6 Supply Temperature.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.04793760000029579,
+        "planning_s": 7.199184600031003,
+        "execution_s": 117.00626729993382,
+        "summarization_s": 3.5349865999887697,
+        "total_s": 130.55340789997717,
+        "num_steps": 4,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 1.3786959999706596,
+            "tool_call_s": 0.018922300019767135,
+            "total_s": 1.3976409999886528,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.6162063999800012,
+            "tool_call_s": 0.01852869999129325,
+            "total_s": 0.6347533999942243,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 26.65463770000497,
+            "tool_call_s": 88.95311649999348,
+            "total_s": 115.6077779000043,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.0700023267418146e-05,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by Chiller 6 Supply Temperature.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.04630629997700453,
+        "planning_s": 7.032592499977909,
+        "execution_s": 18.144243499962613,
+        "summarization_s": 8.459254899993539,
+        "total_s": 36.3642493999796,
+        "num_steps": 4,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7751275000046007,
+            "tool_call_s": 0.023254700005054474,
+            "total_s": 0.7984059000154957,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5861719999811612,
+            "tool_call_s": 0.016577199974562973,
+            "total_s": 0.6027676000376232,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 3.536171399988234,
+            "tool_call_s": 13.808456500002649,
+            "total_s": 17.34465129999444,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.1499971151351929e-05,
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "query_id": 13,
+    "query_text": "List all failure modes of Chiller 6 that can be detected by temperature sensors.",
+    "baseline": [
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by temperature sensors.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 8.31273920001695,
+        "planning_s": 9.056846900028177,
+        "execution_s": 97.19018410000717,
+        "summarization_s": 3.242409600003157,
+        "total_s": 119.54519360000268,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.6943387999781407,
+            "tool_call_s": 0.8940167000400834,
+            "total_s": 1.588381199981086,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7765713999979198,
+            "tool_call_s": 1.0063001999515109,
+            "total_s": 1.782892899995204,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5973574999952689,
+            "tool_call_s": 0.8849574999767356,
+            "total_s": 1.4823371000238694,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 82.36244880000595,
+            "tool_call_s": 9.974102899956051,
+            "total_s": 92.33656850003172,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 4.399975296109915e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by temperature sensors.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.613133099977858,
+        "planning_s": 9.185625999991316,
+        "execution_s": 62.75261499994667,
+        "summarization_s": 36.85970219998853,
+        "total_s": 116.98722929996438,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.6653727000229992,
+            "tool_call_s": 0.8040659999824129,
+            "total_s": 1.469449899974279,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7589763000141829,
+            "tool_call_s": 0.8306448999792337,
+            "total_s": 1.5896281000459567,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 1.288149300031364,
+            "tool_call_s": 0.7980678000021726,
+            "total_s": 2.086225499981083,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 20.11486089997925,
+            "tool_call_s": 37.49244010000257,
+            "total_s": 57.607308799983,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.6999623514711857e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by temperature sensors.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.27260710002156,
+        "planning_s": 21.551230999990366,
+        "execution_s": 133.56740919995354,
+        "summarization_s": 19.85151179996319,
+        "total_s": 182.86174429999664,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.6448494999785908,
+            "tool_call_s": 1.2030280000180937,
+            "total_s": 1.847886200004723,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5393934000167064,
+            "tool_call_s": 0.7572571000200696,
+            "total_s": 1.2966615000041202,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.7999631129205227e-06,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 5.0303524999762885,
+            "tool_call_s": 125.39249019999988,
+            "total_s": 130.42285360000096,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 5.099980626255274e-06,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by temperature sensors.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.035253899986855686,
+        "planning_s": 9.873589999973774,
+        "execution_s": 54.584104100067634,
+        "summarization_s": 3.2626076999586076,
+        "total_s": 69.62188409996452,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.653070000000298,
+            "tool_call_s": 0.007207100046798587,
+            "total_s": 0.66028459998779,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 37.55011900002137,
+            "tool_call_s": 0.014392600045539439,
+            "total_s": 37.564522200031206,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 1.2693959000171162,
+            "tool_call_s": 0.013545699999667704,
+            "total_s": 1.2829515000339597,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 4.800036549568176e-06,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 3.387565999990329,
+            "tool_call_s": 12.971354299981613,
+            "total_s": 16.35892839997541,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by temperature sensors.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.0189511000062339,
+        "planning_s": 9.388358400028665,
+        "execution_s": 17.758541100018192,
+        "summarization_s": 3.6627362999715842,
+        "total_s": 33.51905990001978,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.6062221000320278,
+            "tool_call_s": 0.008959600003436208,
+            "total_s": 0.615189999982249,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.8462144000222906,
+            "tool_call_s": 0.01801629998954013,
+            "total_s": 0.8642404000274837,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5785526999970898,
+            "tool_call_s": 0.0051500999834388494,
+            "total_s": 0.5837075000163168,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 3.1831145999603905,
+            "tool_call_s": 13.095053900033236,
+            "total_s": 16.278292900009546,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.1000025551766157e-05,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all failure modes of Chiller 6 that can be detected by temperature sensors.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.048400399973616004,
+        "planning_s": 10.127818499982823,
+        "execution_s": 18.280455700063612,
+        "summarization_s": 3.4675864999881014,
+        "total_s": 34.61686920002103,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.7135691999574192,
+            "tool_call_s": 0.023785300028976053,
+            "total_s": 0.7373800000059418,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7767147999838926,
+            "tool_call_s": 0.022261900012381375,
+            "total_s": 0.7990061000455171,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.6386656999820843,
+            "tool_call_s": 0.018209500005468726,
+            "total_s": 0.6568962999735959,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 3.1568412000196986,
+            "tool_call_s": 13.585963499965146,
+            "total_s": 16.74282659997698,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.0300020221620798e-05,
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "query_id": 14,
+    "query_text": "Get all the events of equipment CWC04009 for the June of 2020 and provide a summary based on the event group for work order, alert, and anomaly.",
+    "baseline": [
+      {
+        "question": "Get all the events of equipment CWC04009 for the June of 2020 and provide a summary based on the event group for work order, alert, and anomaly.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 7.1968985999701545,
+        "planning_s": 6.533375900005922,
+        "execution_s": 3.4420487000024877,
+        "summarization_s": 6.05736400000751,
+        "total_s": 24.411713399982546,
+        "num_steps": 3,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 1.3890592999523506,
+            "tool_call_s": 2.0529509999905713,
+            "total_s": 3.4420339000062086,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 9.700015652924776e-06,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 5.099980626255274e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "Get all the events of equipment CWC04009 for the June of 2020 and provide a summary based on the event group for work order, alert, and anomaly.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.709865999990143,
+        "planning_s": 6.397825000050943,
+        "execution_s": 86.97252309997566,
+        "summarization_s": 17.321406000002753,
+        "total_s": 118.60778079996817,
+        "num_steps": 3,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 84.8602833999903,
+            "tool_call_s": 2.112203299999237,
+            "total_s": 86.97250989999156,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 8.500006515532732e-06,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 4.699977580457926e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "Get all the events of equipment CWC04009 for the June of 2020 and provide a summary based on the event group for work order, alert, and anomaly.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.662765700020827,
+        "planning_s": 6.560816899989732,
+        "execution_s": 3.2387793999514543,
+        "summarization_s": 5.358060900005512,
+        "total_s": 23.042362299980596,
+        "num_steps": 3,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 1.230149100010749,
+            "tool_call_s": 2.0085904000443406,
+            "total_s": 3.2387655000202358,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 9.09995287656784e-06,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 4.799978341907263e-06,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "Get all the events of equipment CWC04009 for the June of 2020 and provide a summary based on the event group for work order, alert, and anomaly.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.0764560999814421,
+        "planning_s": 6.90152479999233,
+        "execution_s": 2.3524704000446945,
+        "summarization_s": 5.421641700027976,
+        "total_s": 16.487572000012733,
+        "num_steps": 3,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 1.3890037999954075,
+            "tool_call_s": 0.9627990999724716,
+            "total_s": 2.3518312000087462,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.0600022505968809e-05,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 7.299997378140688e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "Get all the events of equipment CWC04009 for the June of 2020 and provide a summary based on the event group for work order, alert, and anomaly.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.045289100031368434,
+        "planning_s": 6.510377000027802,
+        "execution_s": 2.217074499989394,
+        "summarization_s": 5.364999199984595,
+        "total_s": 15.74128150002798,
+        "num_steps": 3,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 1.1863950000260957,
+            "tool_call_s": 1.02988359995652,
+            "total_s": 2.2163046000059694,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.209997572004795e-05,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 7.599999662488699e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "Get all the events of equipment CWC04009 for the June of 2020 and provide a summary based on the event group for work order, alert, and anomaly.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.047013400006107986,
+        "planning_s": 6.360164200013969,
+        "execution_s": 2.2477038999204524,
+        "summarization_s": 5.606503499962855,
+        "total_s": 16.247239199990872,
+        "num_steps": 3,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 1.1806023000390269,
+            "tool_call_s": 1.066304600040894,
+            "total_s": 2.246940099983476,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.2199976481497288e-05,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 6.999995093792677e-06,
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "query_id": 15,
+    "query_text": "Get all the events of equipment CWC04009 for the first week of June of 2020 and provide a summary based on the event group for work order event, alert, and anomaly.",
+    "baseline": [
+      {
+        "question": "Get all the events of equipment CWC04009 for the first week of June of 2020 and provide a summary based on the event group for work order event, alert, and anomaly.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 7.438324799994007,
+        "planning_s": 13.909918999997899,
+        "execution_s": 47.444080999994185,
+        "summarization_s": 3.357873599976301,
+        "total_s": 73.38327719998779,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 1.444223599974066,
+            "tool_call_s": 2.0728649999946356,
+            "total_s": 3.5171134999836795,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 8.90000956133008e-06,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 1.3528851000010036,
+            "tool_call_s": 2.0796860000118613,
+            "total_s": 3.432589399977587,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 15.238191100012045,
+            "tool_call_s": 2.5453754999907687,
+            "total_s": 17.783589600003324,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 20.174903100007214,
+            "tool_call_s": 2.5358467999612913,
+            "total_s": 22.710779600020032,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "Get all the events of equipment CWC04009 for the first week of June of 2020 and provide a summary based on the event group for work order event, alert, and anomaly.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.754376200027764,
+        "planning_s": 13.332851199957076,
+        "execution_s": 21.497136200021487,
+        "summarization_s": 3.2794627000112087,
+        "total_s": 46.073458400031086,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 1.2078985000262037,
+            "tool_call_s": 2.050572599982843,
+            "total_s": 3.2584952999604866,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 9.100011084228754e-06,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 8.265688900020905,
+            "tool_call_s": 2.0913534000283107,
+            "total_s": 10.357060200010892,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 1.6329455999657512,
+            "tool_call_s": 2.525973099982366,
+            "total_s": 4.158941500005312,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 1.2745543000055477,
+            "tool_call_s": 2.4480533999740146,
+            "total_s": 3.7226301000337116,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "Get all the events of equipment CWC04009 for the first week of June of 2020 and provide a summary based on the event group for work order event, alert, and anomaly.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.6839749999926426,
+        "planning_s": 16.421660499996506,
+        "execution_s": 14.787239599972963,
+        "summarization_s": 3.5194936000043526,
+        "total_s": 42.64552180003375,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 1.192744700005278,
+            "tool_call_s": 1.984830699977465,
+            "total_s": 3.177601999952458,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 8.200004231184721e-06,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 1.236277100048028,
+            "tool_call_s": 2.069515500043053,
+            "total_s": 3.30581190000521,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 1.816644600010477,
+            "tool_call_s": 2.5206524999812245,
+            "total_s": 4.33732550003333,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 1.4595171000109985,
+            "tool_call_s": 2.5069537000381388,
+            "total_s": 3.966491999977734,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "Get all the events of equipment CWC04009 for the first week of June of 2020 and provide a summary based on the event group for work order event, alert, and anomaly.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.06675579998409376,
+        "planning_s": 13.456980999966618,
+        "execution_s": 9.275835099979304,
+        "summarization_s": 3.0324131999514066,
+        "total_s": 27.34528459998546,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 1.3895002999925055,
+            "tool_call_s": 0.9318640999845229,
+            "total_s": 2.3213861999684013,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 9.999959729611874e-06,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 1.341493999992963,
+            "tool_call_s": 0.915126399951987,
+            "total_s": 2.2566392000298947,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 1.5182608999894,
+            "tool_call_s": 5.435314600006677,
+            "total_s": 6.953591800003778,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 1.444570699997712,
+            "tool_call_s": 1.3944086999981664,
+            "total_s": 2.8390095999930054,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "Get all the events of equipment CWC04009 for the first week of June of 2020 and provide a summary based on the event group for work order event, alert, and anomaly.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.047267100017052144,
+        "planning_s": 20.039821800019126,
+        "execution_s": 22.855557599978056,
+        "summarization_s": 3.585972699976992,
+        "total_s": 48.08665449998807,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 1.344807099958416,
+            "tool_call_s": 0.8945328000118025,
+            "total_s": 2.239365399989765,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.1100026313215494e-05,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 20.513359300035518,
+            "tool_call_s": 0.10188509995350614,
+            "total_s": 20.615260699996725,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 1.6083142000134103,
+            "tool_call_s": 5.055498100002296,
+            "total_s": 6.663841500005219,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 1.413577500032261,
+            "tool_call_s": 1.2174800999928266,
+            "total_s": 2.6310723000206053,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "Get all the events of equipment CWC04009 for the first week of June of 2020 and provide a summary based on the event group for work order event, alert, and anomaly.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.04614719998789951,
+        "planning_s": 13.121344599989243,
+        "execution_s": 24.416681800037622,
+        "summarization_s": 3.2858957000426017,
+        "total_s": 42.379785600001924,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "wo",
+            "tool": "get_events",
+            "llm_resolve_s": 16.40814070001943,
+            "tool_call_s": 1.1262249000137672,
+            "total_s": 17.534388999978546,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 9.90001717582345e-06,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "wo",
+            "tool": "get_work_orders",
+            "llm_resolve_s": 1.2871728000463918,
+            "tool_call_s": 0.7918507000431418,
+            "total_s": 2.079039999982342,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "wo",
+            "tool": "analyze_alert_to_failure",
+            "llm_resolve_s": 1.6285907999845222,
+            "tool_call_s": 5.252813800005242,
+            "total_s": 6.881423100014217,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "wo",
+            "tool": "predict_next_work_order",
+            "llm_resolve_s": 1.4463623000192456,
+            "tool_call_s": 1.2828069999814034,
+            "total_s": 2.7291862000129186,
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "query_id": 16,
+    "query_text": "Can I list all the metrics monitored by CQPA AHU 2B? use site MAIN",
+    "baseline": [
+      {
+        "question": "Can I list all the metrics monitored by CQPA AHU 2B? use site MAIN",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 7.037554400041699,
+        "planning_s": 7.888485700008459,
+        "execution_s": 9.544585700088646,
+        "summarization_s": 1.4168380000046454,
+        "total_s": 26.702345700003207,
+        "num_steps": 4,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.9719932000152767,
+            "tool_call_s": 6.351728499983437,
+            "total_s": 7.32373230002122,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.700020559132099e-06,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.949781899980735,
+            "tool_call_s": 1.2710602000006475,
+            "total_s": 2.220847800024785,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.900022082030773e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "Can I list all the metrics monitored by CQPA AHU 2B? use site MAIN",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.909459399990737,
+        "planning_s": 7.3965294000227,
+        "execution_s": 10.02209889999358,
+        "summarization_s": 1.5715015000314452,
+        "total_s": 26.799769000033848,
+        "num_steps": 4,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.49364550004247576,
+            "tool_call_s": 6.119033900031354,
+            "total_s": 6.612689099973068,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 3.400025889277458e-06,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 2.0545259000500664,
+            "tool_call_s": 1.3548702000407502,
+            "total_s": 3.409403299971018,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 3.100023604929447e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "Can I list all the metrics monitored by CQPA AHU 2B? use site MAIN",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.606233200000133,
+        "planning_s": 7.471993199957069,
+        "execution_s": 30.09110270004021,
+        "summarization_s": 1.4205297000007704,
+        "total_s": 46.463902899995446,
+        "num_steps": 4,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 6.915760300005786,
+            "tool_call_s": 6.116637800005265,
+            "total_s": 13.032412500004284,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.900022082030773e-06,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 15.86095750000095,
+            "tool_call_s": 1.1977189000463113,
+            "total_s": 17.058683199982625,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 4.100031219422817e-06,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "Can I list all the metrics monitored by CQPA AHU 2B? use site MAIN",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.021568199968896806,
+        "planning_s": 8.248123800032772,
+        "execution_s": 7.811685299966484,
+        "summarization_s": 1.6853335999767296,
+        "total_s": 18.659045799984597,
+        "num_steps": 4,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.8240869999863207,
+            "tool_call_s": 5.212378400028683,
+            "total_s": 6.036475100030657,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 3.900029696524143e-06,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 1.393896699999459,
+            "tool_call_s": 0.38107440003659576,
+            "total_s": 1.774976999964565,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.900022082030773e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "Can I list all the metrics monitored by CQPA AHU 2B? use site MAIN",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.01573790004476905,
+        "planning_s": 7.824539299996104,
+        "execution_s": 7.212529199954588,
+        "summarization_s": 1.386268200003542,
+        "total_s": 17.269316499994602,
+        "num_steps": 4,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.49916080001275986,
+            "tool_call_s": 5.308866599982139,
+            "total_s": 5.808035499998368,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 3.7999707274138927e-06,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 1.0020250999950804,
+            "tool_call_s": 0.4022319999639876,
+            "total_s": 1.4042632000055164,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.8999638743698597e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "Can I list all the metrics monitored by CQPA AHU 2B? use site MAIN",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.015467800025362521,
+        "planning_s": 8.297550699964631,
+        "execution_s": 7.71626199997263,
+        "summarization_s": 29.693014699965715,
+        "total_s": 46.700283400015905,
+        "num_steps": 4,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.4315270999795757,
+            "tool_call_s": 5.419922100030817,
+            "total_s": 5.851457400014624,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 3.2999669201672077e-06,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 1.453444099985063,
+            "tool_call_s": 0.41113000002224,
+            "total_s": 1.864579799992498,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.800021320581436e-06,
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "query_id": 17,
+    "query_text": "What is the power consumption of CQPA AHU 1 on mar 13 '20, site MAIN?",
+    "baseline": [
+      {
+        "question": "What is the power consumption of CQPA AHU 1 on mar 13 '20, site MAIN?",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.6521659999853,
+        "planning_s": 11.229594700038433,
+        "execution_s": 12.954549300076906,
+        "summarization_s": 1.3570055000018328,
+        "total_s": 33.09214860002976,
+        "num_steps": 6,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sites",
+            "llm_resolve_s": 0.41513019998092204,
+            "tool_call_s": 0.8508002000162378,
+            "total_s": 1.265939500008244,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.400872599973809,
+            "tool_call_s": 6.325636300025508,
+            "total_s": 6.726522300043143,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 7.199996616691351e-06,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.8391880000126548,
+            "tool_call_s": 1.0747543000034057,
+            "total_s": 1.9139639000059105,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.260003773495555e-05,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "iot",
+            "tool": "history",
+            "llm_resolve_s": 2.1464580000028946,
+            "tool_call_s": 0.9016195999574848,
+            "total_s": 3.048103799985256,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "What is the power consumption of CQPA AHU 1 on mar 13 '20, site MAIN?",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.976634899969213,
+        "planning_s": 11.522337800008245,
+        "execution_s": 24.774827300047036,
+        "summarization_s": 1.551461199996993,
+        "total_s": 45.83093860000372,
+        "num_steps": 6,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sites",
+            "llm_resolve_s": 0.5232927000033669,
+            "tool_call_s": 0.888658200041391,
+            "total_s": 1.4119774000137113,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.4799337000004016,
+            "tool_call_s": 6.722354400029872,
+            "total_s": 7.202310499968007,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 9.800016414374113e-06,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.8384398000198416,
+            "tool_call_s": 0.9751527999760583,
+            "total_s": 1.813609600008931,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 8.700008038431406e-06,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "iot",
+            "tool": "history",
+            "llm_resolve_s": 13.398001499997918,
+            "tool_call_s": 0.9488935000263155,
+            "total_s": 14.346911300031934,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "What is the power consumption of CQPA AHU 1 on mar 13 '20, site MAIN?",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.972901800007094,
+        "planning_s": 10.79023830004735,
+        "execution_s": 15.056837900076061,
+        "summarization_s": 1.2603909999597818,
+        "total_s": 34.97081159998197,
+        "num_steps": 6,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sites",
+            "llm_resolve_s": 0.4366765000158921,
+            "tool_call_s": 0.8737949999631383,
+            "total_s": 1.3104956000461243,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 2.8920274999691173,
+            "tool_call_s": 6.639940100023523,
+            "total_s": 9.531987700029276,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.2399978004395962e-05,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.8832646000082605,
+            "tool_call_s": 1.0265717000002041,
+            "total_s": 1.9098521000123583,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.400000812485814e-05,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "iot",
+            "tool": "history",
+            "llm_resolve_s": 1.4353478000266477,
+            "tool_call_s": 0.8691016000229865,
+            "total_s": 2.3044661000021733,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "What is the power consumption of CQPA AHU 1 on mar 13 '20, site MAIN?",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.10050469997804612,
+        "planning_s": 99.2571649000165,
+        "execution_s": 15.505254200019408,
+        "summarization_s": 1.2483435000176542,
+        "total_s": 117.20562090002932,
+        "num_steps": 6,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sites",
+            "llm_resolve_s": 0.9206145000061952,
+            "tool_call_s": 0.01075940002920106,
+            "total_s": 0.9313940999563783,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 1.292742499965243,
+            "tool_call_s": 5.286419500014745,
+            "total_s": 6.579193799989298,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 9.700015652924776e-06,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 1.1278919000178576,
+            "tool_call_s": 0.08743539999704808,
+            "total_s": 1.2153443999704905,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 9.399955160915852e-06,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "iot",
+            "tool": "history",
+            "llm_resolve_s": 6.738302100042347,
+            "tool_call_s": 0.03962360002333298,
+            "total_s": 6.777942400018219,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "What is the power consumption of CQPA AHU 1 on mar 13 '20, site MAIN?",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.05599109997274354,
+        "planning_s": 10.885147299966775,
+        "execution_s": 87.92980329989223,
+        "summarization_s": 1.1907608999754302,
+        "total_s": 100.97117159998743,
+        "num_steps": 6,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sites",
+            "llm_resolve_s": 0.998962500016205,
+            "tool_call_s": 0.008592700003646314,
+            "total_s": 1.0075732000404969,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.49996520002605394,
+            "tool_call_s": 5.089918999990914,
+            "total_s": 5.589900700026192,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 9.600014891475439e-06,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.8425399000407197,
+            "tool_call_s": 0.08693530003074557,
+            "total_s": 0.9294925999711268,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 1.0500021744519472e-05,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "iot",
+            "tool": "history",
+            "llm_resolve_s": 80.38444379996508,
+            "tool_call_s": 0.01718660001643002,
+            "total_s": 80.40164689999074,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "What is the power consumption of CQPA AHU 1 on mar 13 '20, site MAIN?",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.02075289998902008,
+        "planning_s": 10.593315100006294,
+        "execution_s": 8.408429800067097,
+        "summarization_s": 1.167568399978336,
+        "total_s": 21.13538900000276,
+        "num_steps": 6,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "sites",
+            "llm_resolve_s": 0.4001764999702573,
+            "tool_call_s": 0.006498200003989041,
+            "total_s": 0.4066824000328779,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.4428870999836363,
+            "tool_call_s": 5.013965299993288,
+            "total_s": 5.456861199985724,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.9999646358191967e-06,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 1.0441098000155762,
+            "tool_call_s": 0.07147320004878566,
+            "total_s": 1.1155925000202842,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 5.999987479299307e-06,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "iot",
+            "tool": "history",
+            "llm_resolve_s": 1.413698900025338,
+            "tool_call_s": 0.015046299959067255,
+            "total_s": 1.4287525999825448,
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "query_id": 18,
+    "query_text": "List all sensors of Chiller 6 that are potentially relevant to Compressor Overheating.",
+    "baseline": [
+      {
+        "question": "List all sensors of Chiller 6 that are potentially relevant to Compressor Overheating.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 7.216199999966193,
+        "planning_s": 9.492296100012027,
+        "execution_s": 47.81931509991409,
+        "summarization_s": 0.9514501999947242,
+        "total_s": 67.15686909999931,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.584511500026565,
+            "tool_call_s": 0.8215361000038683,
+            "total_s": 1.4060572999878787,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.9003119999542832,
+            "tool_call_s": 0.7872844000230543,
+            "total_s": 1.6876042999792844,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 41.95506539999042,
+            "tool_call_s": 0.7454677000059746,
+            "total_s": 42.7005410999991,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 1.2278328000102192,
+            "tool_call_s": 0.797267300018575,
+            "total_s": 2.025108999980148,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 3.3999676816165447e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all sensors of Chiller 6 that are potentially relevant to Compressor Overheating.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.331406700017396,
+        "planning_s": 10.756944100023247,
+        "execution_s": 7.150417699827813,
+        "summarization_s": 1.146219399990514,
+        "total_s": 26.913546800031327,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.7214893000200391,
+            "tool_call_s": 0.8206640999997035,
+            "total_s": 1.5421611999627203,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 1.4300459999940358,
+            "tool_call_s": 0.8364161000354216,
+            "total_s": 2.2664692999678664,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5142560999956913,
+            "tool_call_s": 0.7902579000219703,
+            "total_s": 1.3045235999743454,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 1.2848852000315674,
+            "tool_call_s": 0.7523686999920756,
+            "total_s": 2.0372609999612905,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 2.5999615900218487e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all sensors of Chiller 6 that are potentially relevant to Compressor Overheating.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.5925267999991775,
+        "planning_s": 9.617802399967331,
+        "execution_s": 6.437404100084677,
+        "summarization_s": 1.0079206000082195,
+        "total_s": 25.257407199998852,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.5435872999951243,
+            "tool_call_s": 0.7964331999537535,
+            "total_s": 1.3400314000318758,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.9120287999976426,
+            "tool_call_s": 0.7817473000031896,
+            "total_s": 1.6937838000012562,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5037520999903791,
+            "tool_call_s": 0.7419943999848329,
+            "total_s": 1.245754100033082,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 1.3446942000300623,
+            "tool_call_s": 0.8131300999666564,
+            "total_s": 2.1578316999948584,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 3.100023604929447e-06,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "List all sensors of Chiller 6 that are potentially relevant to Compressor Overheating.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.02311150002060458,
+        "planning_s": 9.857658699969761,
+        "execution_s": 3.484329300117679,
+        "summarization_s": 0.8953753999667242,
+        "total_s": 15.84598320000805,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.5786192999803461,
+            "tool_call_s": 0.00930899998638779,
+            "total_s": 0.5879374999785796,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.9698270999942906,
+            "tool_call_s": 0.012138099991716444,
+            "total_s": 0.9819771000184119,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5326821000198834,
+            "tool_call_s": 0.0123240000102669,
+            "total_s": 0.5450150999822654,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 1.8948038999806158,
+            "tool_call_s": 0.01917949999915436,
+            "total_s": 1.9139962999615818,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 3.700028173625469e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all sensors of Chiller 6 that are potentially relevant to Compressor Overheating.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.016591400024481118,
+        "planning_s": 13.082512900000438,
+        "execution_s": 2.62871209991863,
+        "summarization_s": 0.9256289000040852,
+        "total_s": 18.260287099983543,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.5885338999796659,
+            "tool_call_s": 0.00856230000499636,
+            "total_s": 0.5971046999911778,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.8164906000019982,
+            "tool_call_s": 0.0059065999812446535,
+            "total_s": 0.82240390003426,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.4984527000342496,
+            "tool_call_s": 0.013451099977828562,
+            "total_s": 0.511913199967239,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 1.1933103999472223,
+            "tool_call_s": 0.01553159998729825,
+            "total_s": 1.2088511000038125,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 5.299982149153948e-06,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all sensors of Chiller 6 that are potentially relevant to Compressor Overheating.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.009988100035116076,
+        "planning_s": 9.315951800032053,
+        "execution_s": 35.85129640001105,
+        "summarization_s": 0.9587567999842577,
+        "total_s": 47.75044720002916,
+        "num_steps": 5,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.5912850000313483,
+            "tool_call_s": 0.009039700031280518,
+            "total_s": 0.6003344999626279,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 1.3580970999901183,
+            "tool_call_s": 0.007324900012463331,
+            "total_s": 1.3654386999551207,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 33.99859229999129,
+            "tool_call_s": 0.006817099987529218,
+            "total_s": 34.005416100029834,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_mode_sensor_mapping",
+            "llm_resolve_s": 1.2276829999755137,
+            "tool_call_s": 0.017450999992433935,
+            "total_s": 1.2451424000319093,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "none",
+            "tool": "none",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 3.6999699659645557e-06,
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "query_id": 19,
+    "query_text": "Get sensor data for both Chiller 6 and Chiller 9's Tonnage from first week of June 2020 at MAIN in a single file.",
+    "baseline": [],
+    "optimized": []
+  },
+  {
+    "query_id": 20,
+    "query_text": "List all sensors of Chiller 6 and Chiller 9.",
+    "baseline": [
+      {
+        "question": "List all sensors of Chiller 6 and Chiller 9.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 19.079265500011388,
+        "planning_s": 5.627696300041862,
+        "execution_s": 10.251908100035507,
+        "summarization_s": 1.0335480999783613,
+        "total_s": 38.48316609999165,
+        "num_steps": 3,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.6366642999928445,
+            "tool_call_s": 2.408042100025341,
+            "total_s": 3.0447264999966137,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 1.3843722000019625,
+            "tool_call_s": 2.416804599983152,
+            "total_s": 3.8011933999950998,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.9286313999909908,
+            "tool_call_s": 2.477344599959906,
+            "total_s": 3.4059882000437938,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all sensors of Chiller 6 and Chiller 9.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 19.36875510000391,
+        "planning_s": 5.827371799969114,
+        "execution_s": 14.81208380003227,
+        "summarization_s": 1.1126444000401534,
+        "total_s": 43.619729799975175,
+        "num_steps": 3,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 4.8666257000295445,
+            "tool_call_s": 2.4118447999935597,
+            "total_s": 7.278490299999248,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 1.48160729999654,
+            "tool_call_s": 2.535034300002735,
+            "total_s": 4.016660100023728,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 1.048407199967187,
+            "tool_call_s": 2.4685062000062317,
+            "total_s": 3.516933400009293,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all sensors of Chiller 6 and Chiller 9.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 19.121615200012457,
+        "planning_s": 5.621727299992926,
+        "execution_s": 9.638560999941546,
+        "summarization_s": 1.0535836999770254,
+        "total_s": 37.94690810004249,
+        "num_steps": 3,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.588346799951978,
+            "tool_call_s": 2.4684701000223868,
+            "total_s": 3.0568335999851115,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.716373700008262,
+            "tool_call_s": 2.424426299985498,
+            "total_s": 3.140809599950444,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 1.0563884999719448,
+            "tool_call_s": 2.3845146999810822,
+            "total_s": 3.440917800005991,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "List all sensors of Chiller 6 and Chiller 9.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.07266860001254827,
+        "planning_s": 5.36552330001723,
+        "execution_s": 30.892739500035532,
+        "summarization_s": 1.0232631000108086,
+        "total_s": 39.84599060000619,
+        "num_steps": 3,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.5600809999741614,
+            "tool_call_s": 0.020041899988427758,
+            "total_s": 0.580141199985519,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 30.291399399982765,
+            "tool_call_s": 0.0206754999817349,
+            "total_s": 30.31209109997144,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.9015715999994427,
+            "tool_call_s": 0.020575900038238615,
+            "total_s": 0.9221614999696612,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all sensors of Chiller 6 and Chiller 9.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.027137800003401935,
+        "planning_s": 5.498321200022474,
+        "execution_s": 22.964454899949487,
+        "summarization_s": 0.9874933999963105,
+        "total_s": 31.91179609997198,
+        "num_steps": 3,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.6180101999780163,
+            "tool_call_s": 0.014857300033327192,
+            "total_s": 0.632881700003054,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 22.30906880000839,
+            "tool_call_s": 0.021990600042045116,
+            "total_s": 22.33107629994629,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 1.0078109999885783,
+            "tool_call_s": 0.019846800016239285,
+            "total_s": 1.0276704000425525,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "List all sensors of Chiller 6 and Chiller 9.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.035448300011921674,
+        "planning_s": 5.834177599987015,
+        "execution_s": 120.64650949998759,
+        "summarization_s": 1.4148977999575436,
+        "total_s": 129.46999840001808,
+        "num_steps": 3,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.5752472999738529,
+            "tool_call_s": 0.0091709999833256,
+            "total_s": 0.584429899987299,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 1.4256800999864936,
+            "tool_call_s": 0.007782700005918741,
+            "total_s": 1.433471099997405,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.0,
+            "tool_call_s": 0.0,
+            "total_s": 120.06179770000745,
+            "success": false
+          }
+        ]
+      }
+    ]
   }
 ]
