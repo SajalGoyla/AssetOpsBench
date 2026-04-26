@@ -38,6 +38,7 @@ import json as _json
 import os
 import time
 from dataclasses import dataclass, field
+from contextlib import AsyncExitStack
 from pathlib import Path
 
 _REPO_ROOT = Path(__file__).resolve().parent
@@ -166,6 +167,121 @@ class DiscoveryCache:
 
 
 # ══════════════════════════════════════════════════════════════════════════════
+#  MCP Connection Pool — spawn each server ONCE, reuse across all tool calls
+# ══════════════════════════════════════════════════════════════════════════════
+
+_TOOL_CALL_TIMEOUT = 60  # seconds — prevents runaway tool calls
+
+
+class MCPPool:
+    """Pool of persistent MCP server sessions.
+
+    Spawns each MCP server at most once (via ``uv run <entry-point>``) and
+    keeps the ``ClientSession`` alive for the duration of the pool's
+    lifetime.  All subsequent ``list_tools`` / ``call_tool`` requests
+    re-use the existing session instead of spawning a new subprocess.
+
+    A per-server ``asyncio.Lock`` serialises access so concurrent
+    coroutines never interleave JSON-RPC messages on the same stdio
+    transport.  Different servers are fully concurrent.
+    """
+
+    def __init__(self, server_paths: dict[str, Path | str]) -> None:
+        self._server_paths = server_paths
+        self._sessions: dict = {}
+        self._locks: dict[str, asyncio.Lock] = {}
+        self._stack: AsyncExitStack | None = None
+
+    async def __aenter__(self) -> "MCPPool":
+        self._stack = AsyncExitStack()
+        await self._stack.__aenter__()
+        self._locks = {n: asyncio.Lock() for n in self._server_paths}
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        self._sessions.clear()
+        if self._stack:
+            return await self._stack.__aexit__(exc_type, exc_val, exc_tb)
+        return False
+
+    async def _get_session(self, server_name: str):
+        """Return a persistent ClientSession, spawning the server on first use."""
+        if server_name in self._sessions:
+            return self._sessions[server_name]
+
+        from mcp import ClientSession
+        from mcp.client.stdio import stdio_client
+        from agent.plan_execute.executor import _make_stdio_params
+
+        path = self._server_paths[server_name]
+        params = _make_stdio_params(path)
+        read, write = await self._stack.enter_async_context(stdio_client(params))
+        session = await self._stack.enter_async_context(ClientSession(read, write))
+        await session.initialize()
+        self._sessions[server_name] = session
+        return session
+
+    async def list_tools(self, server_name: str) -> list[dict]:
+        """List tools on a server, reusing a persistent session."""
+        async with self._locks[server_name]:
+            session = await self._get_session(server_name)
+            result = await session.list_tools()
+            tools = []
+            for t in result.tools:
+                schema = t.inputSchema or {}
+                props = schema.get("properties", {})
+                required = set(schema.get("required", []))
+                parameters = [
+                    {"name": k, "type": v.get("type", "any"), "required": k in required}
+                    for k, v in props.items()
+                ]
+                tools.append({
+                    "name": t.name,
+                    "description": t.description or "",
+                    "parameters": parameters,
+                })
+            return tools
+
+    async def call_tool(
+        self, server_name: str, tool_name: str, args: dict
+    ) -> str:
+        """Call a tool on a server, reusing a persistent session.
+
+        Applies a timeout (_TOOL_CALL_TIMEOUT) to prevent runaway calls
+        from stalling the entire run (e.g. FMSR mapping calls that hang).
+        """
+        async with self._locks[server_name]:
+            session = await self._get_session(server_name)
+            result = await asyncio.wait_for(
+                session.call_tool(tool_name, args),
+                timeout=_TOOL_CALL_TIMEOUT,
+            )
+            return "\n".join(
+                getattr(item, "text", str(item)) for item in result.content
+            )
+
+    async def get_server_descriptions(self) -> dict[str, str]:
+        """Get formatted tool descriptions from all servers (pool-aware)."""
+        descriptions: dict[str, str] = {}
+        for name in self._server_paths:
+            try:
+                tools = await self.list_tools(name)
+                lines = []
+                for t in tools:
+                    params_str = ", ".join(
+                        f"{p['name']}: {p['type']}{'?' if not p['required'] else ''}"
+                        for p in t.get("parameters", [])
+                    )
+                    lines.append(
+                        f"  - {t['name']}({params_str}): {t['description']}"
+                    )
+                descriptions[name] = "\n".join(lines)
+            except Exception as exc:  # noqa: BLE001
+                descriptions[name] = f"  (unavailable: {exc})"
+        return descriptions
+
+
+# ══════════════════════════════════════════════════════════════════════════════
 #  Data classes
 # ══════════════════════════════════════════════════════════════════════════════
 
@@ -180,6 +296,20 @@ class StepTiming:
     tool_call_s: float = 0.0     # time spent in the MCP tool call
     total_s: float = 0.0
     success: bool = True
+    tool_args: dict = field(default_factory=dict)
+    response: str = ""
+    error: str = ""
+
+
+@dataclass
+class PlanStepInfo:
+    """Lightweight snapshot of a PlanStep for verbose output."""
+    step_number: int
+    task: str
+    server: str
+    tool: str
+    dependencies: list[int] = field(default_factory=list)
+    expected_output: str = ""
 
 
 @dataclass
@@ -193,6 +323,9 @@ class RunTiming:
     layer_wall_times: list[float] = field(default_factory=list)
     summarization_s: float = 0.0
     total_s: float = 0.0
+    plan_steps: list[PlanStepInfo] = field(default_factory=list)
+    plan_layers: list[list[int]] = field(default_factory=list)
+    answer: str = ""
 
     @property
     def execution_s(self) -> float:
@@ -215,8 +348,6 @@ class ProfiledRunner:
             Executor,
             DEFAULT_SERVER_PATHS,
             _resolve_args_with_llm,
-            _call_tool,
-            _list_tools,
         )
         from agent.plan_execute.planner import Planner
 
@@ -226,10 +357,7 @@ class ProfiledRunner:
         self._planner = Planner(self._llm)
         self._executor = Executor(self._llm, self._server_paths)
         self._cache = DiscoveryCache(self._server_paths)
-
         self._resolve_args_with_llm = _resolve_args_with_llm
-        self._call_tool = _call_tool
-        self._list_tools = _list_tools
 
     async def run(
         self,
@@ -246,90 +374,103 @@ class ProfiledRunner:
         )
         run_start = time.perf_counter()
 
-        # ── 1. Discovery ──────────────────────────────────────────────
-        t0 = time.perf_counter()
-        if cache_discovery:
-            cached = self._cache.load()
-            if cached is not None:
-                server_descriptions = cached
+        async with MCPPool(self._server_paths) as pool:
+            # ── 1. Discovery ──────────────────────────────────────────
+            t0 = time.perf_counter()
+            if cache_discovery:
+                cached = self._cache.load()
+                if cached is not None:
+                    server_descriptions = cached
+                else:
+                    server_descriptions = await pool.get_server_descriptions()
+                    self._cache.save(server_descriptions)
             else:
-                server_descriptions = await self._executor.get_server_descriptions()
-                self._cache.save(server_descriptions)
-        else:
-            server_descriptions = await self._executor.get_server_descriptions()
-        timing.discovery_s = time.perf_counter() - t0
+                server_descriptions = await pool.get_server_descriptions()
+            timing.discovery_s = time.perf_counter() - t0
 
-        # ── 2. Planning ───────────────────────────────────────────────
-        t0 = time.perf_counter()
-        plan = self._planner.generate_plan(question, server_descriptions)
-        timing.planning_s = time.perf_counter() - t0
+            # ── 2. Planning ───────────────────────────────────────────
+            t0 = time.perf_counter()
+            plan = self._planner.generate_plan(question, server_descriptions)
+            timing.planning_s = time.perf_counter() - t0
 
-        # ── shared: pre-fetch tool schemas ────────────────────────────
-        all_steps = plan.steps
-        server_names = {step.server for step in all_steps}
-        tool_schemas: dict[str, dict[str, str]] = {}
-        for name in server_names:
-            path = self._server_paths.get(name)
-            if path is None:
-                continue
-            try:
-                tools = await self._list_tools(path)
-                tool_schemas[name] = {
-                    t["name"]: ", ".join(
-                        f"{p['name']}: {p['type']}{'?' if not p['required'] else ''}"
-                        for p in t.get("parameters", [])
-                    )
-                    for t in tools
-                }
-            except Exception:  # noqa: BLE001
-                tool_schemas[name] = {}
-
-        context: dict[int, StepResult] = {}
-
-        if parallel:
-            # ── 3a. Parallel execution (DAG layer by layer) ───────────
+            timing.plan_steps = [
+                PlanStepInfo(
+                    step_number=s.step_number, task=s.task, server=s.server,
+                    tool=s.tool, dependencies=s.dependencies,
+                    expected_output=s.expected_output,
+                )
+                for s in plan.steps
+            ]
             layers = plan.dependency_layers()
-            for layer_idx, layer in enumerate(layers):
-                layer_start = time.perf_counter()
+            timing.plan_layers = [
+                [s.step_number for s in layer] for layer in layers
+            ]
 
-                async def _timed_step(step, ctx=context):
-                    schema = tool_schemas.get(step.server, {}).get(step.tool, "")
-                    return await self._execute_step_timed(
-                        step, ctx, question, schema, tool_schemas
+            # ── shared: pre-fetch tool schemas (reuses pool sessions) ─
+            all_steps = plan.steps
+            server_names = {step.server for step in all_steps}
+            tool_schemas: dict[str, dict[str, str]] = {}
+            for name in server_names:
+                if name not in self._server_paths:
+                    continue
+                try:
+                    tools = await pool.list_tools(name)
+                    tool_schemas[name] = {
+                        t["name"]: ", ".join(
+                            f"{p['name']}: {p['type']}{'?' if not p['required'] else ''}"
+                            for p in t.get("parameters", [])
+                        )
+                        for t in tools
+                    }
+                except Exception:  # noqa: BLE001
+                    tool_schemas[name] = {}
+
+            context: dict[int, StepResult] = {}
+
+            if parallel:
+                # ── 3a. Parallel execution (DAG layer by layer) ───────
+                layers = plan.dependency_layers()
+                for layer_idx, layer in enumerate(layers):
+                    layer_start = time.perf_counter()
+
+                    async def _timed_step(step, ctx=context):
+                        schema = tool_schemas.get(step.server, {}).get(step.tool, "")
+                        return await self._execute_step_timed(
+                            step, ctx, question, schema, tool_schemas, pool
+                        )
+
+                    layer_results: list[tuple[StepTiming, StepResult]] = (
+                        await asyncio.gather(*[_timed_step(step) for step in layer])
                     )
+                    layer_wall = time.perf_counter() - layer_start
+                    timing.layer_wall_times.append(layer_wall)
 
-                layer_results: list[tuple[StepTiming, StepResult]] = (
-                    await asyncio.gather(*[_timed_step(step) for step in layer])
-                )
-                layer_wall = time.perf_counter() - layer_start
-                timing.layer_wall_times.append(layer_wall)
-
-                for st, result in layer_results:
-                    context[result.step_number] = result
+                    for st, result in layer_results:
+                        context[result.step_number] = result
+                        timing.steps.append(st)
+            else:
+                # ── 3b. Sequential execution (one step at a time) ─────
+                for step in plan.resolved_order():
+                    schema = tool_schemas.get(step.server, {}).get(step.tool, "")
+                    st, result = await self._execute_step_timed(
+                        step, context, question, schema, tool_schemas, pool
+                    )
+                    context[step.step_number] = result
                     timing.steps.append(st)
-        else:
-            # ── 3b. Sequential execution (one step at a time) ─────────
-            for step in plan.resolved_order():
-                schema = tool_schemas.get(step.server, {}).get(step.tool, "")
-                st, result = await self._execute_step_timed(
-                    step, context, question, schema, tool_schemas
-                )
-                context[step.step_number] = result
-                timing.steps.append(st)
 
-        # ── 4. Summarization ──────────────────────────────────────────
-        from agent.plan_execute.runner import _SUMMARIZE_PROMPT
+            # ── 4. Summarization ──────────────────────────────────────
+            from agent.plan_execute.runner import _SUMMARIZE_PROMPT
 
-        results_text = "\n\n".join(
-            f"Step {r.step_number} — {r.task} (server: {r.server}):\n"
-            + (r.response if r.success else f"ERROR: {r.error}")
-            for r in context.values()
-        )
-        t0 = time.perf_counter()
-        self._llm.generate(
-            _SUMMARIZE_PROMPT.format(question=question, results=results_text)
-        )
-        timing.summarization_s = time.perf_counter() - t0
+            results_text = "\n\n".join(
+                f"Step {r.step_number} — {r.task} (server: {r.server}):\n"
+                + (r.response if r.success else f"ERROR: {r.error}")
+                for r in context.values()
+            )
+            t0 = time.perf_counter()
+            timing.answer = self._llm.generate(
+                _SUMMARIZE_PROMPT.format(question=question, results=results_text)
+            )
+            timing.summarization_s = time.perf_counter() - t0
 
         timing.total_s = time.perf_counter() - run_start
         return timing
@@ -343,6 +484,7 @@ class ProfiledRunner:
         question: str,
         tool_schema: str,
         tool_schemas: dict,
+        pool: MCPPool,
     ):
         """Execute one step and return (StepTiming, StepResult)."""
         from agent.plan_execute.models import StepResult
@@ -374,10 +516,12 @@ class ProfiledRunner:
                 question, step.task, step.tool, tool_schema, context, self._llm
             )
             st.llm_resolve_s = time.perf_counter() - t_llm
+            st.tool_args = resolved_args
 
             t_tool = time.perf_counter()
-            response = await self._call_tool(server_path, step.tool, resolved_args)
+            response = await pool.call_tool(step.server, step.tool, resolved_args)
             st.tool_call_s = time.perf_counter() - t_tool
+            st.response = response
 
             result = StepResult(
                 step_number=step.step_number,
@@ -387,17 +531,31 @@ class ProfiledRunner:
                 tool=step.tool,
                 tool_args=resolved_args,
             )
-        except Exception as exc:  # noqa: BLE001
+        except asyncio.TimeoutError:
+            st.tool_call_s = float(_TOOL_CALL_TIMEOUT)
+            st.success = False
+            st.error = f"Tool call timed out after {_TOOL_CALL_TIMEOUT}s"
             result = StepResult(
                 step_number=step.step_number,
                 task=step.task,
                 server=step.server,
                 response="",
-                error=str(exc),
+                error=st.error,
                 tool=step.tool,
                 tool_args=step.tool_args,
             )
+        except Exception as exc:  # noqa: BLE001
             st.success = False
+            st.error = str(exc)
+            result = StepResult(
+                step_number=step.step_number,
+                task=step.task,
+                server=step.server,
+                response="",
+                error=st.error,
+                tool=step.tool,
+                tool_args=step.tool_args,
+            )
 
         st.total_s = time.perf_counter() - step_start
         return st, result
@@ -482,6 +640,52 @@ def print_run(timing: RunTiming, run_index: int | None = None) -> None:
     )
     if max_llm > 10.0:
         print(f"  ** WatsonX outlier detected: slowest LLM call took {max_llm:.1f}s **")
+
+
+def _truncate(text: str, max_len: int = 200) -> str:
+    """Truncate long text for display, preserving the first max_len chars."""
+    text = text.replace("\n", " ").strip()
+    if len(text) <= max_len:
+        return text
+    return text[:max_len] + "..."
+
+
+def print_verbose(timing: RunTiming) -> None:
+    """Print the plan, step-by-step execution details, and final answer."""
+    # ── Plan ────────────────────────────────────────────────────────
+    n_steps = len(timing.plan_steps)
+    n_layers = len(timing.plan_layers)
+    print(f"\n  ── PLAN ({n_steps} steps, {n_layers} layer{'s' if n_layers != 1 else ''}) "
+          f"{'─' * 40}")
+    for ps in timing.plan_steps:
+        deps = f" | Deps: {ps.dependencies}" if ps.dependencies else ""
+        print(f"    Step {ps.step_number}: {ps.task}")
+        print(f"        Server: {ps.server} | Tool: {ps.tool}{deps}")
+    if timing.plan_layers:
+        layers_str = " → ".join(
+            "[" + ", ".join(str(n) for n in layer) + "]"
+            for layer in timing.plan_layers
+        )
+        print(f"    Layers: {layers_str}")
+
+    # ── Step-by-step execution ──────────────────────────────────────
+    print(f"\n  ── EXECUTION {'─' * 48}")
+    for st in timing.steps:
+        status = "OK" if st.success else "FAILED"
+        print(f"    Step {st.step_number} [{st.server}] {st.tool}  ({st.total_s:.3f}s) — {status}")
+        if st.tool_args:
+            print(f"      Args: {_json.dumps(st.tool_args, default=str)}")
+        if st.response:
+            print(f"      Response: {_truncate(st.response)}")
+        if st.error:
+            print(f"      Error: {st.error}")
+
+    # ── Final answer ────────────────────────────────────────────────
+    if timing.answer:
+        print(f"\n  ── FINAL ANSWER {'─' * 45}")
+        for line in timing.answer.strip().splitlines():
+            print(f"    {line}")
+    print()
 
 
 def print_comparison(seq: RunTiming, par: RunTiming) -> None:
@@ -660,6 +864,7 @@ async def run_optimization(
     question: str,
     model_id: str = "watsonx/meta-llama/llama-3-3-70b-instruct",
     runs: int = 3,
+    verbose: bool = False,
 ) -> None:
     """Run the MCP workflow optimization benchmark.
 
@@ -697,6 +902,8 @@ async def run_optimization(
         if t is not None:
             baseline.append(t)
             print_run(t, run_index=i)
+            if verbose:
+                print_verbose(t)
         else:
             print(f"  >> Baseline run {i}/{runs} SKIPPED (WatsonX error).")
 
@@ -725,6 +932,8 @@ async def run_optimization(
         if t is not None:
             optimized.append(t)
             print_run(t, run_index=i)
+            if verbose:
+                print_verbose(t)
         else:
             print(f"  >> Optimized run {i}/{runs} SKIPPED (WatsonX error).")
 
@@ -782,6 +991,11 @@ examples:
   uv run python timer.py --compare "query"                # seq vs par
   uv run python timer.py --runs 3 "query"                 # multi-run avg
 
+  # Verbose output (plan, args, responses, final answer)
+  uv run python timer.py -v "query"                       # single verbose
+  uv run python timer.py --optimize -v "query"            # benchmark verbose
+  uv run python timer.py --compare -v "query"             # compare verbose
+
   # Cache management
   uv run python timer.py --clear-cache                    # wipe cache
 """,
@@ -832,6 +1046,11 @@ examples:
         action="store_true",
         help="Delete the discovery cache file and exit.",
     )
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Show plan details, tool args, step responses, and final answer for each run.",
+    )
     return parser
 
 
@@ -850,7 +1069,7 @@ async def _main(args: argparse.Namespace) -> None:
     # ── Full optimization benchmark ───────────────────────────────────
     if args.optimize:
         runs = args.runs if args.runs > 1 else 5
-        await run_optimization(args.question, args.model_id, runs)
+        await run_optimization(args.question, args.model_id, runs, verbose=args.verbose)
         return
 
     # ── Individual profiling modes (original behaviour) ───────────────
@@ -862,12 +1081,16 @@ async def _main(args: argparse.Namespace) -> None:
             args.question, parallel=False, cache_discovery=args.cache_discovery
         )
         print_run(seq)
+        if args.verbose:
+            print_verbose(seq)
 
         print("\n>> Running PARALLEL...", flush=True)
         par = await runner.run(
             args.question, parallel=True, cache_discovery=args.cache_discovery
         )
         print_run(par)
+        if args.verbose:
+            print_verbose(par)
 
         print_comparison(seq, par)
         return
@@ -885,6 +1108,8 @@ async def _main(args: argparse.Namespace) -> None:
         )
         timings.append(t)
         print_run(t, run_index=i if args.runs > 1 else None)
+        if args.verbose:
+            print_verbose(t)
 
     print_summary(timings)
 
