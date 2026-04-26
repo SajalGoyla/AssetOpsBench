@@ -27,7 +27,7 @@ Available servers and tools:
 Output format — one block per step, exactly:
 
 #Task1: <task description>
-#Server1: <exact server name>
+#Server1: <exact server name, or "none" if no tool call is needed>
 #Tool1: <exact tool name, or "none" if no tool call is needed>
 #Dependency1: None
 #ExpectedOutput1: <what this step should produce>

@@ -86,48 +86,61 @@ class Executor:
         return descriptions
 
     async def execute_plan(self, plan: Plan, question: str) -> list[StepResult]:
-        """Execute all plan steps in dependency order."""
+        """Execute all plan steps in dependency order.
+
+        Uses a persistent MCPServerPool to avoid spawning a new subprocess
+        for every tool call.
+        """
+        from .server_pool import MCPServerPool
+
         ordered = plan.resolved_order()
         total = len(ordered)
 
-        # Pre-fetch tool schemas for all servers referenced in the plan so that
-        # _resolve_args_with_llm can include exact parameter names in its prompt.
-        server_names = {step.server for step in ordered}
-        tool_schemas: dict[str, dict[str, str]] = {}  # server -> {tool_name -> sig}
-        for name in server_names:
-            path = self._server_paths.get(name)
-            if path is None:
-                continue
-            try:
-                tools = await _list_tools(path)
-                tool_schemas[name] = {
-                    t["name"]: ", ".join(
-                        f"{p['name']}: {p['type']}{'?' if not p['required'] else ''}"
-                        for p in t.get("parameters", [])
-                    )
-                    for t in tools
-                }
-            except Exception:  # noqa: BLE001
-                tool_schemas[name] = {}
+        # Determine which servers the plan actually needs.
+        server_names = {
+            step.server for step in ordered
+            if step.tool and step.tool.lower() not in ("none", "null")
+        } & set(self._server_paths)
 
-        context: dict[int, StepResult] = {}
-        results: list[StepResult] = []
-        for step in ordered:
-            _log.info(
-                "Step %d/%d [%s]: %s",
-                step.step_number,
-                total,
-                step.server,
-                step.task,
-            )
-            schema = tool_schemas.get(step.server, {}).get(step.tool, "")
-            result = await self.execute_step(step, context, question, tool_schema=schema)
-            if result.success:
-                _log.info("Step %d OK.", step.step_number)
-            else:
-                _log.warning("Step %d FAILED: %s", step.step_number, result.error)
-            context[step.step_number] = result
-            results.append(result)
+        async with MCPServerPool(self._server_paths) as pool:
+            # Start only the servers we need.
+            await pool.start_servers(server_names)
+
+            # Pre-fetch tool schemas via the persistent pool.
+            tool_schemas: dict[str, dict[str, str]] = {}
+            for name in server_names:
+                try:
+                    tools = await pool.list_tools(name)
+                    tool_schemas[name] = {
+                        t["name"]: ", ".join(
+                            f"{p['name']}: {p['type']}{'?' if not p['required'] else ''}"
+                            for p in t.get("parameters", [])
+                        )
+                        for t in tools
+                    }
+                except Exception:  # noqa: BLE001
+                    tool_schemas[name] = {}
+
+            context: dict[int, StepResult] = {}
+            results: list[StepResult] = []
+            for step in ordered:
+                _log.info(
+                    "Step %d/%d [%s]: %s",
+                    step.step_number,
+                    total,
+                    step.server,
+                    step.task,
+                )
+                schema = tool_schemas.get(step.server, {}).get(step.tool, "")
+                result = await self.execute_step(
+                    step, context, question, tool_schema=schema, pool=pool,
+                )
+                if result.success:
+                    _log.info("Step %d OK.", step.step_number)
+                else:
+                    _log.warning("Step %d FAILED: %s", step.step_number, result.error)
+                context[step.step_number] = result
+                results.append(result)
         return results
 
     async def execute_step(
@@ -136,14 +149,27 @@ class Executor:
         context: dict[int, StepResult],
         question: str,
         tool_schema: str = "",
+        pool: "MCPServerPool | None" = None,
     ) -> StepResult:
         """Execute a single plan step.
 
-        1. Resolve the MCP server assigned to this step.
-        2. If no tool is specified, return expected_output directly.
+        1. If no tool is specified, return expected_output directly.
+        2. Resolve the MCP server assigned to this step.
         3. Call the LLM to generate tool arguments from the task and prior results.
-        4. Call the tool and return its result.
+        4. Call the tool (via pool if available, else spawn subprocess).
         """
+        # Check for "no tool" steps first — if there is nothing to call,
+        # the server field is irrelevant (the LLM often emits "none" for both).
+        if not step.tool or step.tool.lower() in ("none", "null"):
+            return StepResult(
+                step_number=step.step_number,
+                task=step.task,
+                server=step.server,
+                response=step.expected_output,
+                tool=step.tool,
+                tool_args=step.tool_args,
+            )
+
         server_path = self._server_paths.get(step.server)
         if server_path is None:
             return StepResult(
@@ -157,23 +183,19 @@ class Executor:
                 ),
             )
 
-        if not step.tool or step.tool.lower() in ("none", "null"):
-            return StepResult(
-                step_number=step.step_number,
-                task=step.task,
-                server=step.server,
-                response=step.expected_output,
-                tool=step.tool,
-                tool_args=step.tool_args,
-            )
-
         try:
             _log.info("Step %d: calling LLM to resolve args.", step.step_number)
             resolved_args = await _resolve_args_with_llm(
                 question, step.task, step.tool, tool_schema, context, self._llm
             )
 
-            response = await _call_tool(server_path, step.tool, resolved_args)
+            # Use persistent pool if available, else fall back to subprocess.
+            if pool is not None and pool.has_server(step.server):
+                response = await pool.call_tool(
+                    step.server, step.tool, resolved_args
+                )
+            else:
+                response = await _call_tool(server_path, step.tool, resolved_args)
             return StepResult(
                 step_number=step.step_number,
                 task=step.task,

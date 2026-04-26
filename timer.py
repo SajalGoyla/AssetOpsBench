@@ -264,55 +264,83 @@ class ProfiledRunner:
         plan = self._planner.generate_plan(question, server_descriptions)
         timing.planning_s = time.perf_counter() - t0
 
-        # ── shared: pre-fetch tool schemas ────────────────────────────
+        # ── 3. Execution ───────────────────────────────────────────────
         all_steps = plan.steps
-        server_names = {step.server for step in all_steps}
-        tool_schemas: dict[str, dict[str, str]] = {}
-        for name in server_names:
-            path = self._server_paths.get(name)
-            if path is None:
-                continue
-            try:
-                tools = await self._list_tools(path)
-                tool_schemas[name] = {
-                    t["name"]: ", ".join(
-                        f"{p['name']}: {p['type']}{'?' if not p['required'] else ''}"
-                        for p in t.get("parameters", [])
-                    )
-                    for t in tools
-                }
-            except Exception:  # noqa: BLE001
-                tool_schemas[name] = {}
+        server_names = {
+            step.server for step in all_steps
+            if step.tool and step.tool.lower() not in ("none", "null")
+        } & set(self._server_paths)
 
         context: dict[int, StepResult] = {}
 
         if parallel:
-            # ── 3a. Parallel execution (DAG layer by layer) ───────────
-            layers = plan.dependency_layers()
-            for layer_idx, layer in enumerate(layers):
-                layer_start = time.perf_counter()
+            # ── 3a. Parallel execution (pool + DAG layers) ────────────
+            # Connection pooling is essential for parallel execution:
+            # start each server once, reuse for all concurrent tool calls.
+            from agent.plan_execute.server_pool import MCPServerPool
 
-                async def _timed_step(step, ctx=context):
-                    schema = tool_schemas.get(step.server, {}).get(step.tool, "")
-                    return await self._execute_step_timed(
-                        step, ctx, question, schema, tool_schemas
+            async with MCPServerPool(self._server_paths) as pool:
+                await pool.start_servers(server_names)
+
+                # Pre-fetch tool schemas via persistent pool.
+                tool_schemas: dict[str, dict[str, str]] = {}
+                for name in server_names:
+                    try:
+                        tools = await pool.list_tools(name)
+                        tool_schemas[name] = {
+                            t["name"]: ", ".join(
+                                f"{p['name']}: {p['type']}{'?' if not p['required'] else ''}"
+                                for p in t.get("parameters", [])
+                            )
+                            for t in tools
+                        }
+                    except Exception:  # noqa: BLE001
+                        tool_schemas[name] = {}
+
+                layers = plan.dependency_layers()
+                for layer_idx, layer in enumerate(layers):
+                    layer_start = time.perf_counter()
+
+                    async def _timed_step(step, ctx=context, _pool=pool):
+                        schema = tool_schemas.get(step.server, {}).get(step.tool, "")
+                        return await self._execute_step_timed(
+                            step, ctx, question, schema, tool_schemas, pool=_pool
+                        )
+
+                    layer_results: list[tuple[StepTiming, StepResult]] = (
+                        await asyncio.gather(*[_timed_step(step) for step in layer])
                     )
+                    layer_wall = time.perf_counter() - layer_start
+                    timing.layer_wall_times.append(layer_wall)
 
-                layer_results: list[tuple[StepTiming, StepResult]] = (
-                    await asyncio.gather(*[_timed_step(step) for step in layer])
-                )
-                layer_wall = time.perf_counter() - layer_start
-                timing.layer_wall_times.append(layer_wall)
-
-                for st, result in layer_results:
-                    context[result.step_number] = result
-                    timing.steps.append(st)
+                    for st, result in layer_results:
+                        context[result.step_number] = result
+                        timing.steps.append(st)
         else:
-            # ── 3b. Sequential execution (one step at a time) ─────────
+            # ── 3b. Sequential baseline (subprocess per call) ─────────
+            # Uses the original subprocess-per-call approach to represent
+            # the un-optimized baseline for fair comparison.
+            tool_schemas = {}
+            for name in server_names:
+                path = self._server_paths.get(name)
+                if path is None:
+                    continue
+                try:
+                    tools = await self._list_tools(path)
+                    tool_schemas[name] = {
+                        t["name"]: ", ".join(
+                            f"{p['name']}: {p['type']}{'?' if not p['required'] else ''}"
+                            for p in t.get("parameters", [])
+                        )
+                        for t in tools
+                    }
+                except Exception:  # noqa: BLE001
+                    tool_schemas[name] = {}
+
             for step in plan.resolved_order():
                 schema = tool_schemas.get(step.server, {}).get(step.tool, "")
                 st, result = await self._execute_step_timed(
-                    step, context, question, schema, tool_schemas
+                    step, context, question, schema, tool_schemas, pool=None
                 )
                 context[step.step_number] = result
                 timing.steps.append(st)
@@ -343,6 +371,7 @@ class ProfiledRunner:
         question: str,
         tool_schema: str,
         tool_schemas: dict,
+        pool=None,
     ):
         """Execute one step and return (StepTiming, StepResult)."""
         from agent.plan_execute.models import StepResult
@@ -376,7 +405,13 @@ class ProfiledRunner:
             st.llm_resolve_s = time.perf_counter() - t_llm
 
             t_tool = time.perf_counter()
-            response = await self._call_tool(server_path, step.tool, resolved_args)
+            # Use persistent pool if available, else fall back to subprocess.
+            if pool is not None and pool.has_server(step.server):
+                response = await pool.call_tool(
+                    step.server, step.tool, resolved_args
+                )
+            else:
+                response = await self._call_tool(server_path, step.tool, resolved_args)
             st.tool_call_s = time.perf_counter() - t_tool
 
             result = StepResult(

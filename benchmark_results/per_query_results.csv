@@ -1,0 +1,2 @@
+query_id,query_text,bl_discovery,bl_planning,bl_execution,bl_summarization,bl_total,bl_success_rate,bl_num_steps,opt_discovery,opt_planning,opt_execution,opt_summarization,opt_total,opt_success_rate,opt_num_steps,discovery_speedup,execution_speedup,total_speedup
+1,What is the current date and time? Also list assets at site MAIN. Also get sensor list and failure mode list for any of the chiller at site MAIN.,6.6794,9.8925,96.9553,3.1552,129.3841,3,6,0.0538,10.5064,20.2027,4.4596,56.1662,3,6,124.1516,4.7991,2.3036

@@ -1,0 +1,394 @@
+[
+  {
+    "query_id": 1,
+    "query_text": "What is the current date and time? Also list assets at site MAIN. Also get sensor list and failure mode list for any of the chiller at site MAIN.",
+    "baseline": [
+      {
+        "question": "What is the current date and time? Also list assets at site MAIN. Also get sensor list and failure mode list for any of the chiller at site MAIN.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.397888100007549,
+        "planning_s": 13.535904099990148,
+        "execution_s": 18.99263549997704,
+        "summarization_s": 11.884877000004053,
+        "total_s": 53.10320040001534,
+        "num_steps": 6,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "utilities",
+            "tool": "current_date_time",
+            "llm_resolve_s": 0.6271807000157423,
+            "tool_call_s": 0.7805983999860473,
+            "total_s": 1.4077922999858856,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.4597636999678798,
+            "tool_call_s": 6.172398999973666,
+            "total_s": 6.632177499996033,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7317746999906376,
+            "tool_call_s": 4.759076499962248,
+            "total_s": 5.49086120002903,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5835046999854967,
+            "tool_call_s": 0.8233412000117823,
+            "total_s": 1.4068557999562472,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.9515610000235029,
+            "tool_call_s": 1.5965892999665812,
+            "total_s": 2.548160700011067,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.7147630000254139,
+            "tool_call_s": 0.7920166000258178,
+            "total_s": 1.506787999998778,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "What is the current date and time? Also list assets at site MAIN. Also get sensor list and failure mode list for any of the chiller at site MAIN.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 6.379334700002801,
+        "planning_s": 11.589426000020467,
+        "execution_s": 54.0712583999848,
+        "summarization_s": 11.902307100011967,
+        "total_s": 86.2030743000214,
+        "num_steps": 6,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "utilities",
+            "tool": "current_date_time",
+            "llm_resolve_s": 24.44673739996506,
+            "tool_call_s": 0.7887059000204317,
+            "total_s": 25.23545139998896,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 6.845059800019953,
+            "tool_call_s": 6.0037240000092424,
+            "total_s": 12.848790799966082,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 5.593508900026791,
+            "tool_call_s": 4.695023600012064,
+            "total_s": 10.288539300032426,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.6078372999909334,
+            "tool_call_s": 0.7851872000028379,
+            "total_s": 1.3930322999949567,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.8629898999934085,
+            "tool_call_s": 1.5211523000034504,
+            "total_s": 2.384164899995085,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 1.1593745999853127,
+            "tool_call_s": 0.7618893000180833,
+            "total_s": 1.9212797000072896,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "What is the current date and time? Also list assets at site MAIN. Also get sensor list and failure mode list for any of the chiller at site MAIN.",
+        "mode": "sequential",
+        "cache_discovery": false,
+        "discovery_s": 8.556143799971323,
+        "planning_s": 9.87537030002568,
+        "execution_s": 45.52574320003623,
+        "summarization_s": 10.925555399968289,
+        "total_s": 77.56026729999576,
+        "num_steps": 6,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "utilities",
+            "tool": "current_date_time",
+            "llm_resolve_s": 0.6465916000306606,
+            "tool_call_s": 0.8505239999503829,
+            "total_s": 1.497133800003212,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 25.19177239999408,
+            "tool_call_s": 6.401251600007527,
+            "total_s": 31.593044699984603,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7299603999708779,
+            "tool_call_s": 5.023422800004482,
+            "total_s": 5.753405800031032,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 1.1894882000051439,
+            "tool_call_s": 0.9204128999845125,
+            "total_s": 2.109924000047613,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7832030999707058,
+            "tool_call_s": 1.966079899983015,
+            "total_s": 2.7493027999880724,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.8238316000206396,
+            "tool_call_s": 0.9990798000362702,
+            "total_s": 1.8229320999816991,
+            "success": true
+          }
+        ]
+      }
+    ],
+    "optimized": [
+      {
+        "question": "What is the current date and time? Also list assets at site MAIN. Also get sensor list and failure mode list for any of the chiller at site MAIN.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.07329949998529628,
+        "planning_s": 10.802060799964238,
+        "execution_s": 32.16273119999096,
+        "summarization_s": 9.81624280003598,
+        "total_s": 55.463602699979674,
+        "num_steps": 6,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "utilities",
+            "tool": "current_date_time",
+            "llm_resolve_s": 1.206276400014758,
+            "tool_call_s": 0.011546599969733506,
+            "total_s": 1.217847799998708,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.4691844999906607,
+            "tool_call_s": 5.456027299980633,
+            "total_s": 5.925240100012161,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.8105168999754824,
+            "tool_call_s": 4.064530099974945,
+            "total_s": 4.875070600013714,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 16.384705500036944,
+            "tool_call_s": 0.0326708999928087,
+            "total_s": 16.417396900011227,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 9.810160599998198,
+            "tool_call_s": 0.008374699973501265,
+            "total_s": 9.818556099955458,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.6884148999815807,
+            "tool_call_s": 0.02932390000205487,
+            "total_s": 0.7177569000050426,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "What is the current date and time? Also list assets at site MAIN. Also get sensor list and failure mode list for any of the chiller at site MAIN.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.012765800056513399,
+        "planning_s": 24.064736900036223,
+        "execution_s": 23.926915000018198,
+        "summarization_s": 5.76221610000357,
+        "total_s": 56.1157913999632,
+        "num_steps": 4,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "utilities",
+            "tool": "current_date_time",
+            "llm_resolve_s": 1.2091891000163741,
+            "tool_call_s": 0.003152899967972189,
+            "total_s": 1.212350400048308,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.5424616999807768,
+            "tool_call_s": 5.121837199956644,
+            "total_s": 5.664306099992245,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.826041099964641,
+            "tool_call_s": 3.9131545000127517,
+            "total_s": 4.73920300003374,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 18.253882299992256,
+            "tool_call_s": 0.00843640003586188,
+            "total_s": 18.262324499955866,
+            "success": true
+          }
+        ]
+      },
+      {
+        "question": "What is the current date and time? Also list assets at site MAIN. Also get sensor list and failure mode list for any of the chiller at site MAIN.",
+        "mode": "parallel",
+        "cache_discovery": true,
+        "discovery_s": 0.015898399986326694,
+        "planning_s": 9.901989000034519,
+        "execution_s": 41.88675090007018,
+        "summarization_s": 6.446244199993089,
+        "total_s": 60.62740749999648,
+        "num_steps": 6,
+        "steps": [
+          {
+            "step_number": 1,
+            "server": "utilities",
+            "tool": "current_date_time",
+            "llm_resolve_s": 36.37898239999777,
+            "tool_call_s": 0.005512900010216981,
+            "total_s": 36.38450519996695,
+            "success": true
+          },
+          {
+            "step_number": 2,
+            "server": "iot",
+            "tool": "assets",
+            "llm_resolve_s": 0.4620913999970071,
+            "tool_call_s": 5.079823700012639,
+            "total_s": 5.541919899987988,
+            "success": true
+          },
+          {
+            "step_number": 3,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7811153000220656,
+            "tool_call_s": 4.084665399976075,
+            "total_s": 4.865790300013032,
+            "success": true
+          },
+          {
+            "step_number": 5,
+            "server": "iot",
+            "tool": "sensors",
+            "llm_resolve_s": 0.7306339000351727,
+            "tool_call_s": 4.128976400010288,
+            "total_s": 4.8596169000375085,
+            "success": true
+          },
+          {
+            "step_number": 4,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.5454566000262275,
+            "tool_call_s": 0.007435999985318631,
+            "total_s": 0.5529007000150159,
+            "success": true
+          },
+          {
+            "step_number": 6,
+            "server": "fmsr",
+            "tool": "get_failure_modes",
+            "llm_resolve_s": 0.6295198000152595,
+            "tool_call_s": 0.00657679996220395,
+            "total_s": 0.6361010000109673,
+            "success": true
+          }
+        ]
+      }
+    ]
+  }
+]

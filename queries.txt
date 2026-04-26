@@ -1,0 +1,20 @@
+What is the current date and time? Also list assets at site MAIN. Also get sensor list and failure mode list for any of the chiller at site MAIN.
+List all failure modes of Chiller 6 that can be detected by temperature sensors and power input sensors.
+In May and June of 2020, numerous anomalies and alerts have been reported for Chiller 9 with equipment ID CWC04009. Could you review them and suggest appropriate work orders or actions?
+After checking existing work orders, anomalies and alerts in May and June 2020 for Chiller 9 with equipment ID CWC04009, should I recommend a new work order or is it too early to decide for July 2020?
+What are the anomaly detection results for Chiller 9's Tonnage and Power Input in the week of 2020-04-27 at the MAIN site?
+List all failure modes of Chiller 6 at MAIN site that can be detected by Chiller 6 Chiller Efficiency.
+List all failure modes of Chiller 6 at MAIN site that can be detected by temperature sensors and power input sensors.
+List all failure modes of asset Chiller.
+List all failure modes of asset Chiller 6.
+List all failure modes of asset Chiller 9.
+List all failure modes of asset Wind Turbine.
+List all failure modes of Chiller 6 that can be detected by Chiller 6 Supply Temperature.
+List all failure modes of Chiller 6 that can be detected by temperature sensors.
+Get all the events of equipment CWC04009 for the June of 2020 and provide a summary based on the event group for work order, alert, and anomaly.
+Get all the events of equipment CWC04009 for the first week of June of 2020 and provide a summary based on the event group for work order event, alert, and anomaly.
+Can I list all the metrics monitored by CQPA AHU 2B? use site MAIN
+What is the power consumption of CQPA AHU 1 on mar 13 '20, site MAIN?
+List all sensors of Chiller 6 that are potentially relevant to Compressor Overheating.
+Get sensor data for both Chiller 6 and Chiller 9's Tonnage from first week of June 2020 at MAIN in a single file.
+List all sensors of Chiller 6 and Chiller 9.
