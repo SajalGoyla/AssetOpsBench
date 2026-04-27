@@ -180,6 +180,20 @@ class StepTiming:
     tool_call_s: float = 0.0     # time spent in the MCP tool call
     total_s: float = 0.0
     success: bool = True
+    tool_args: dict = field(default_factory=dict)
+    response: str = ""
+    error: str = ""
+
+
+@dataclass
+class PlanStepInfo:
+    """Lightweight snapshot of a PlanStep for persistence."""
+    step_number: int
+    task: str
+    server: str
+    tool: str
+    dependencies: list[int] = field(default_factory=list)
+    expected_output: str = ""
 
 
 @dataclass
@@ -191,8 +205,12 @@ class RunTiming:
     planning_s: float = 0.0
     steps: list[StepTiming] = field(default_factory=list)
     layer_wall_times: list[float] = field(default_factory=list)
+    prefetch_s: float = 0.0
     summarization_s: float = 0.0
     total_s: float = 0.0
+    plan_steps: list[PlanStepInfo] = field(default_factory=list)
+    plan_layers: list[list[int]] = field(default_factory=list)
+    answer: str = ""
 
     @property
     def execution_s(self) -> float:
@@ -264,6 +282,19 @@ class ProfiledRunner:
         plan = self._planner.generate_plan(question, server_descriptions)
         timing.planning_s = time.perf_counter() - t0
 
+        timing.plan_steps = [
+            PlanStepInfo(
+                step_number=s.step_number, task=s.task, server=s.server,
+                tool=s.tool, dependencies=s.dependencies,
+                expected_output=s.expected_output,
+            )
+            for s in plan.steps
+        ]
+        timing.plan_layers = [
+            [s.step_number for s in layer]
+            for layer in plan.dependency_layers()
+        ]
+
         # ── 3. Execution ───────────────────────────────────────────────
         all_steps = plan.steps
         server_names = {
@@ -283,6 +314,7 @@ class ProfiledRunner:
                 await pool.start_servers(server_names)
 
                 # Pre-fetch tool schemas via persistent pool.
+                t0 = time.perf_counter()
                 tool_schemas: dict[str, dict[str, str]] = {}
                 for name in server_names:
                     try:
@@ -296,6 +328,7 @@ class ProfiledRunner:
                         }
                     except Exception:  # noqa: BLE001
                         tool_schemas[name] = {}
+                timing.prefetch_s = time.perf_counter() - t0
 
                 layers = plan.dependency_layers()
                 for layer_idx, layer in enumerate(layers):
@@ -320,6 +353,7 @@ class ProfiledRunner:
             # ── 3b. Sequential baseline (subprocess per call) ─────────
             # Uses the original subprocess-per-call approach to represent
             # the un-optimized baseline for fair comparison.
+            t0 = time.perf_counter()
             tool_schemas = {}
             for name in server_names:
                 path = self._server_paths.get(name)
@@ -336,6 +370,7 @@ class ProfiledRunner:
                     }
                 except Exception:  # noqa: BLE001
                     tool_schemas[name] = {}
+            timing.prefetch_s = time.perf_counter() - t0
 
             for step in plan.resolved_order():
                 schema = tool_schemas.get(step.server, {}).get(step.tool, "")
@@ -354,7 +389,7 @@ class ProfiledRunner:
             for r in context.values()
         )
         t0 = time.perf_counter()
-        self._llm.generate(
+        timing.answer = self._llm.generate(
             _SUMMARIZE_PROMPT.format(question=question, results=results_text)
         )
         timing.summarization_s = time.perf_counter() - t0
@@ -403,6 +438,7 @@ class ProfiledRunner:
                 question, step.task, step.tool, tool_schema, context, self._llm
             )
             st.llm_resolve_s = time.perf_counter() - t_llm
+            st.tool_args = resolved_args
 
             t_tool = time.perf_counter()
             # Use persistent pool if available, else fall back to subprocess.
@@ -413,6 +449,7 @@ class ProfiledRunner:
             else:
                 response = await self._call_tool(server_path, step.tool, resolved_args)
             st.tool_call_s = time.perf_counter() - t_tool
+            st.response = response
 
             result = StepResult(
                 step_number=step.step_number,
@@ -423,16 +460,17 @@ class ProfiledRunner:
                 tool_args=resolved_args,
             )
         except Exception as exc:  # noqa: BLE001
+            st.success = False
+            st.error = str(exc)
             result = StepResult(
                 step_number=step.step_number,
                 task=step.task,
                 server=step.server,
                 response="",
-                error=str(exc),
+                error=st.error,
                 tool=step.tool,
                 tool_args=step.tool_args,
             )
-            st.success = False
 
         st.total_s = time.perf_counter() - step_start
         return st, result
@@ -478,8 +516,9 @@ def print_run(timing: RunTiming, run_index: int | None = None) -> None:
 
     col = 32
     rows: list[tuple[str, float]] = [
-        ("Discovery",      timing.discovery_s),
-        ("Planning (LLM)", timing.planning_s),
+        ("Discovery",             timing.discovery_s),
+        ("Planning (LLM)",        timing.planning_s),
+        ("Pre-fetch tool schemas", timing.prefetch_s),
     ]
 
     if timing.mode == "parallel" and timing.layer_wall_times:
@@ -508,7 +547,7 @@ def print_run(timing: RunTiming, run_index: int | None = None) -> None:
         print(f"  {lbl:<{col}} {t:6.3f}s  {bar}")
 
     print(f"  {'-' * (col + 30)}")
-    print(f"  {'TOTAL':<{col}} {timing.total_s:6.3f}s")
+    print(f"  {'Completion':<{col}} {timing.total_s:6.3f}s")
 
     max_llm = max(
         (timing.planning_s, timing.summarization_s,
@@ -530,9 +569,10 @@ def print_comparison(seq: RunTiming, par: RunTiming) -> None:
     phases = [
         ("Discovery",          seq.discovery_s,     par.discovery_s),
         ("Planning (LLM)",     seq.planning_s,      par.planning_s),
+        ("Pre-fetch schemas",  seq.prefetch_s,      par.prefetch_s),
         ("Execution (total)",  seq.execution_s,     par.execution_s),
         ("Summarization (LLM)",seq.summarization_s, par.summarization_s),
-        ("TOTAL",              seq.total_s,         par.total_s),
+        ("Completion",         seq.total_s,         par.total_s),
     ]
     for name, s, p in phases:
         delta = p - s
@@ -561,9 +601,10 @@ def print_summary(timings: list[RunTiming]) -> None:
     phases = [
         ("Discovery",          [t.discovery_s for t in timings]),
         ("Planning (LLM)",     [t.planning_s for t in timings]),
+        ("Pre-fetch schemas",  [t.prefetch_s for t in timings]),
         ("Execution (total)",  [t.execution_s for t in timings]),
         ("Summarization (LLM)",[t.summarization_s for t in timings]),
-        ("TOTAL",              [t.total_s for t in timings]),
+        ("Completion",         [t.total_s for t in timings]),
     ]
     for name, values in phases:
         print(f"  {name:<{col}}  {_stats_str(values)}")
@@ -613,9 +654,10 @@ def _print_opt_comparison(
     phases = [
         ("Discovery",           med_phase(left, "discovery_s"),     med_phase(right, "discovery_s")),
         ("Planning (LLM)",      med_phase(left, "planning_s"),      med_phase(right, "planning_s")),
+        ("Pre-fetch schemas",   med_phase(left, "prefetch_s"),      med_phase(right, "prefetch_s")),
         ("Execution (total)",   med_exec(left),                     med_exec(right)),
         ("Summarization (LLM)", med_phase(left, "summarization_s"), med_phase(right, "summarization_s")),
-        ("TOTAL",               med_phase(left, "total_s"),         med_phase(right, "total_s")),
+        ("Completion",          med_phase(left, "total_s"),         med_phase(right, "total_s")),
     ]
     for name, lv, rv in phases:
         saving = lv - rv
@@ -642,9 +684,10 @@ def _print_mode_summary(label: str, timings: list[RunTiming]) -> None:
     phases = [
         ("Discovery",          [t.discovery_s for t in timings]),
         ("Planning (LLM)",     [t.planning_s for t in timings]),
+        ("Pre-fetch schemas",  [t.prefetch_s for t in timings]),
         ("Execution (total)",  [t.execution_s for t in timings]),
         ("Summarization (LLM)",[t.summarization_s for t in timings]),
-        ("TOTAL",              [t.total_s for t in timings]),
+        ("Completion",         [t.total_s for t in timings]),
     ]
     for name, vals in phases:
         med, avg, mn, mx = _median(vals), _avg(vals), min(vals), max(vals)

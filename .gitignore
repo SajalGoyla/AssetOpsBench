@@ -202,4 +202,5 @@ mcp/couchdb/sample_data/bulk_docs.json
 mcp/servers/tsfm/artifacts/tsfm_models/
 src/tmp/
 main.json
+.discovery_cache.json
 # load_main_json.py

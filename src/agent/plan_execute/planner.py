@@ -53,7 +53,7 @@ _SERVER_RE = re.compile(r"#Server(\d+):\s*(.+)")
 _TOOL_RE = re.compile(r"#Tool(\d+):\s*(.+)")
 _DEP_RE = re.compile(r"#Dependency(\d+):\s*(.+)")
 _OUTPUT_RE = re.compile(r"#ExpectedOutput(\d+):\s*(.+)")
-_DEP_NUM_RE = re.compile(r"#S(\d+)")
+_DEP_NUM_RE = re.compile(r"#(?:S|Task)(\d+)")
 
 
 def parse_plan(raw: str) -> Plan:

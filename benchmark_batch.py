@@ -88,6 +88,7 @@ class QueryResult:
     # Per-phase medians — baseline
     bl_discovery: float = 0.0
     bl_planning: float = 0.0
+    bl_prefetch: float = 0.0
     bl_execution: float = 0.0
     bl_summarization: float = 0.0
     bl_total: float = 0.0
@@ -96,6 +97,7 @@ class QueryResult:
     # Per-phase medians — optimized
     opt_discovery: float = 0.0
     opt_planning: float = 0.0
+    opt_prefetch: float = 0.0
     opt_execution: float = 0.0
     opt_summarization: float = 0.0
     opt_total: float = 0.0
@@ -153,15 +155,31 @@ def _timing_to_dict(t) -> dict[str, Any]:
         "cache_discovery": t.cache_discovery,
         "discovery_s": t.discovery_s,
         "planning_s": t.planning_s,
+        "prefetch_s": t.prefetch_s,
         "execution_s": t.execution_s,
         "summarization_s": t.summarization_s,
         "total_s": t.total_s,
         "num_steps": len(t.steps),
+        "plan": [
+            {
+                "step_number": ps.step_number,
+                "task": ps.task,
+                "server": ps.server,
+                "tool": ps.tool,
+                "dependencies": ps.dependencies,
+            }
+            for ps in t.plan_steps
+        ],
+        "plan_layers": t.plan_layers,
         "steps": [
             {
                 "step_number": s.step_number,
                 "server": s.server,
+                "task": s.task,
                 "tool": s.tool,
+                "tool_args": s.tool_args,
+                "response": s.response,
+                "error": s.error,
                 "llm_resolve_s": s.llm_resolve_s,
                 "tool_call_s": s.tool_call_s,
                 "total_s": s.total_s,
@@ -169,6 +187,7 @@ def _timing_to_dict(t) -> dict[str, Any]:
             }
             for s in t.steps
         ],
+        "answer": t.answer,
     }
 
 
@@ -181,6 +200,7 @@ def _compute_query_result(
     if baseline_runs:
         qr.bl_discovery = _median([t.discovery_s for t in baseline_runs])
         qr.bl_planning = _median([t.planning_s for t in baseline_runs])
+        qr.bl_prefetch = _median([t.prefetch_s for t in baseline_runs])
         qr.bl_execution = _median([t.execution_s for t in baseline_runs])
         qr.bl_summarization = _median([t.summarization_s for t in baseline_runs])
         qr.bl_total = _median([t.total_s for t in baseline_runs])
@@ -190,6 +210,7 @@ def _compute_query_result(
     if optimized_runs:
         qr.opt_discovery = _median([t.discovery_s for t in optimized_runs])
         qr.opt_planning = _median([t.planning_s for t in optimized_runs])
+        qr.opt_prefetch = _median([t.prefetch_s for t in optimized_runs])
         qr.opt_execution = _median([t.execution_s for t in optimized_runs])
         qr.opt_summarization = _median([t.summarization_s for t in optimized_runs])
         qr.opt_total = _median([t.total_s for t in optimized_runs])
@@ -324,9 +345,10 @@ async def run_benchmark(
         for label, bl, opt in [
             ("Discovery",      qr.bl_discovery,      qr.opt_discovery),
             ("Planning",       qr.bl_planning,       qr.opt_planning),
+            ("Pre-fetch",      qr.bl_prefetch,       qr.opt_prefetch),
             ("Execution",      qr.bl_execution,      qr.opt_execution),
             ("Summarization",  qr.bl_summarization,  qr.opt_summarization),
-            ("TOTAL",          qr.bl_total,           qr.opt_total),
+            ("Completion",     qr.bl_total,           qr.opt_total),
         ]:
             sp = bl / opt if opt > 0 else 0
             print(f"    {label:<20} {bl:>9.3f}s {opt:>9.3f}s {sp:>7.2f}x")
@@ -365,6 +387,7 @@ async def run_benchmark(
                 if bl:
                     qr.bl_discovery = _avg([r["discovery_s"] for r in bl])
                     qr.bl_planning = _avg([r["planning_s"] for r in bl])
+                    qr.bl_prefetch = _avg([r.get("prefetch_s", 0) for r in bl])
                     qr.bl_execution = _avg([r["execution_s"] for r in bl])
                     qr.bl_summarization = _avg([r["summarization_s"] for r in bl])
                     qr.bl_total = _avg([r["total_s"] for r in bl])
@@ -373,6 +396,7 @@ async def run_benchmark(
                 if opt:
                     qr.opt_discovery = _avg([r["discovery_s"] for r in opt])
                     qr.opt_planning = _avg([r["planning_s"] for r in opt])
+                    qr.opt_prefetch = _avg([r.get("prefetch_s", 0) for r in opt])
                     qr.opt_execution = _avg([r["execution_s"] for r in opt])
                     qr.opt_summarization = _avg([r["summarization_s"] for r in opt])
                     qr.opt_total = _avg([r["total_s"] for r in opt])
@@ -401,9 +425,9 @@ async def run_benchmark(
 
 _CSV_COLUMNS = [
     "query_id", "query_text",
-    "bl_discovery", "bl_planning", "bl_execution", "bl_summarization", "bl_total",
+    "bl_discovery", "bl_planning", "bl_prefetch", "bl_execution", "bl_summarization", "bl_total",
     "bl_success_rate", "bl_num_steps",
-    "opt_discovery", "opt_planning", "opt_execution", "opt_summarization", "opt_total",
+    "opt_discovery", "opt_planning", "opt_prefetch", "opt_execution", "opt_summarization", "opt_total",
     "opt_success_rate", "opt_num_steps",
     "discovery_speedup", "execution_speedup", "total_speedup",
 ]
@@ -433,7 +457,7 @@ def _write_aggregate_json(
         "model_id": model_id,
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
-    phases = ["discovery", "planning", "execution", "summarization", "total"]
+    phases = ["discovery", "planning", "prefetch", "execution", "summarization", "total"]
     for mode_prefix, mode_label in [("bl_", "baseline"), ("opt_", "optimized")]:
         mode_stats: dict[str, Any] = {}
         for phase in phases:
@@ -472,14 +496,15 @@ def _write_summary_report(
     lines.append(f"  {'Phase':<20} {'Baseline (med)':>14} {'Optimized (med)':>16} {'Speedup':>8}")
     lines.append(f"  {'─' * 62}")
 
-    phases = ["discovery", "planning", "execution", "summarization", "total"]
+    phases = ["discovery", "planning", "prefetch", "execution", "summarization", "total"]
+    label_map = {"prefetch": "Pre-fetch", "total": "Completion"}
     for phase in phases:
         bl_vals = [getattr(qr, f"bl_{phase}") for qr in results]
         opt_vals = [getattr(qr, f"opt_{phase}") for qr in results]
         bl_avg = _avg(bl_vals)
         opt_avg = _avg(opt_vals)
         sp = bl_avg / opt_avg if opt_avg > 0 else 0
-        label = phase.capitalize() if phase != "total" else "TOTAL"
+        label = label_map.get(phase, phase.capitalize())
         lines.append(f"  {label:<20} {bl_avg:>13.3f}s {opt_avg:>15.3f}s {sp:>7.2f}x")
 
     # Overall savings
